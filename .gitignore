@@ -1,4 +1,6 @@
-# luarocks build files
-*.src.rock
-*.zip
+# Generated files
+/outfile.*
+
+# panmeta files
+/panmeta
 *.tar.gz
