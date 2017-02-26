@@ -25,7 +25,7 @@ PANMETA_URL = https://github.com/formatting-science/panmeta/releases/download/$(
 PANDOC_VERSION := $(shell pandoc -v | sed -ne 's/^pandoc //gp')
 export PANDOC_VERSION
 
-all: outfile.tex outfile.pdf outfile.epub outfile.html
+all: $(OUTFILE_PREFIX).tex $(OUTFILE_PREFIX).pdf $(OUTFILE_PREFIX).epub $(OUTFILE_PREFIX).html
 
 $(ENRICHED_JSON_FILE): $(ARTICLE_FILE) panmeta
 	pandoc $(PANDOC_READER_OPTIONS) \
@@ -37,31 +37,31 @@ $(FLATTENED_JSON_FILE): $(ARTICLE_FILE) panmeta
 	       -t panmeta/writers/default.lua \
 	       -o $@ $<
 
-outfile.pdf outfile.tex: $(ENRICHED_JSON_FILE) $(ARTICLE_FILE) templates/panscimeta.latex
+$(OUTFILE_PREFIX).pdf $(OUTFILE_PREFIX).tex: $(ENRICHED_JSON_FILE) $(ARTICLE_FILE) templates/panscimeta.latex
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_LATEX_OPTIONS) \
 	       --template=templates/panscimeta.latex \
 	       -o $@ $<
 
-outfile.epub: $(FLATTENED_JSON_FILE)
+$(OUTFILE_PREFIX).epub: $(FLATTENED_JSON_FILE)
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_NONTEX_OPTIONS) \
 	       --toc \
 	       -o $@ $<
 
-outfile.html: $(FLATTENED_JSON_FILE)
+$(OUTFILE_PREFIX).html: $(FLATTENED_JSON_FILE)
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_NONTEX_OPTIONS) \
 	       --toc \
 				 --mathjax \
 	       -o $@ $<
 
-outfile.jsonld: $(ARTICLE_FILE) $(BIBLIOGRAPHY_FILE)
+$(OUTFILE_PREFIX).jsonld: $(ARTICLE_FILE) $(BIBLIOGRAPHY_FILE)
 	pandoc -t panmeta/writers/jsonld.lua \
 	       --metadata "bibliography:$(BIBLIOGRAPHY_FILE)" \
 	       --output $@ $<
 
-outfile.txt: $(ARTICLE_FILE)
+$(OUTFILE_PREFIX).txt: $(ARTICLE_FILE)
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       --output $@ $<
 
