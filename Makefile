@@ -1,4 +1,5 @@
 ARTICLE_FILE = example/article.md
+BIBLIOGRAPHY_FILE = example/bibliography.bib
 OUTFILE_PREFIX = outfile
 
 ENRICHED_JSON_FILE = $(OUTFILE_PREFIX).enriched.json
@@ -8,14 +9,15 @@ FLATTENED_JSON_FILE = $(OUTFILE_PREFIX).flattened.json
 PANDOC_READER_OPTIONS = --smart
 
 PANDOC_WRITER_OPTIONS = --standalone
+PANDOC_WRITER_OPTIONS += --metadata "bibliography:$(BIBLIOGRAPHY_FILE)"
+PANDOC_WRITER_OPTIONS += --bibliography=$(BIBLIOGRAPHY_FILE)
 
 PANDOC_LATEX_OPTIONS = --latex-engine=xelatex
-PANDOC_LATEX_OPTIONS += -M fontsize=10pt
 
 PANDOC_NONTEX_OPTIONS = --filter pandoc-citeproc
 
 ## PanMeta
-PANMETA_VERSION = v0.1.1
+PANMETA_VERSION = v0.1.4
 PANMETA_URL = https://github.com/formatting-science/panmeta/releases/download/$(PANMETA_VERSION)/panmeta.tar.gz
 
 # Panlunatic uses this variable when deciding which JSON version should be
@@ -57,6 +59,15 @@ outfile.html: $(FLATTENED_JSON_FILE)
 	       --toc \
 				 --mathjax \
 	       -o $@ $<
+
+outfile.jsonld: $(ARTICLE_FILE) $(BIBLIOGRAPHY_FILE)
+	pandoc -t panmeta/writers/jsonld.lua \
+	       --metadata "bibliography:$(BIBLIOGRAPHY_FILE)" \
+	       --output $@ $<
+
+outfile.txt: $(ARTICLE_FILE)
+	pandoc $(PANDOC_WRITER_OPTIONS) \
+	       --output $@ $<
 
 clean:
 	rm -f $(OUTFILE_PREFIX).*
