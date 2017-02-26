@@ -1,16 +1,23 @@
 ---
+title: Example article written in pandoc-flavored Markdown
 author:
-  Jane Doe:
-    institute:
-      - fosg
-      - fop
-    email: jane.doe@example.com
-    orcid: 0000-0000-0000-0000
-  John Doe:
-    institute: fosg
+  - Jane Doe:
+      institute:
+        - fosg
+        - fop
+      email: jane.doe@example.com
+      orcid: 0000-0000-0000-0000
+  - John Q. Doe:
+      institute: fosg
+  - John X. Doe:
+      institute: fosg
 institute:
-  fosg: Formatting Open Science Group
-  fop: Federation of Planets
+  - fosg:
+      name: Formatting Open Science Group
+      address: 23 Science Street, Eureka, Mississippi, USA
+      phone: +1 (555) 423 1338
+      email: '{firstname}.{lastname}\@fosg.example.com'
+  - fop: Federation of Planets
 ...
 
 # Abstract
@@ -22,6 +29,9 @@ This is an example article.  There is not much to see but filler text.
 
 See the [pandoc manual](http://pandoc.org/MANUAL.html) for more information on
 pandoc.
+
+Authors struggling to fill this document with content are referred to
+@Upper_writers_1974.
 
 
 # Lorem Ipsum
@@ -57,3 +67,54 @@ eos.
 Recusandae et sit ut. Impedit deserunt consequatur et dignissimos vel et.
 Eveniet voluptatem magni quis est dolore excepturi officia nihil. Debitis quae
 commodi error.
+
+Modi debitis et ut saepe saepe dolorem. Quis sed autem expedita est voluptate
+esse neque. Quod aspernatur quam velit placeat nihil omnis debitis. Corporis sit
+rerum consectetur possimus rerum consequuntur. Rerum quas ut repellendus
+tenetur. Consequuntur adipisci dolores eveniet qui est ipsum.
+
+Atque deserunt necessitatibus unde facere amet molestiae. Ipsam at quia placeat
+aliquam autem. Enim corporis accusamus consequatur.
+
+Et vitae unde perferendis tenetur cupiditate non exercitationem. Aut molestiae
+sed est. Deserunt repudiandae non quia esse ad vitae vel in. Et reprehenderit
+dolore et aut distinctio.
+
+Vel quia molestiae quod sint fuga omnis est fuga. Minus quaerat repellat quod.
+Rerum rerum enim repellendus rerum consequatur non perspiciatis. Illo sapiente
+sed natus ipsa quia temporibus. Est nostrum fugit odio non voluptatem odit
+rerum. Et consequatur aut nostrum accusamus earum.
+
+Sit explicabo iure eligendi consequatur. Consequatur atque praesentium
+consequatur dolores quam. Neque eius provident harum placeat. Quo aut pariatur
+illum laborum porro minima. Dolorem nobis esse laudantium. Perspiciatis
+voluptate deleniti voluptatem et.
+
+Quos assumenda magnam non inventore. Adipisci repellendus eligendi possimus
+voluptate numquam voluptatem natus. Deleniti cupiditate facilis commodi aliquid
+voluptatem laudantium autem similique. Vel sunt cupiditate consequatur. Dolorum
+voluptatem nihil culpa fugiat non itaque animi iusto. Unde incidunt numquam
+vitae.
+
+Eius provident voluptatem animi quidem quia. Velit omnis voluptas atque.
+Voluptatem accusamus atque blanditiis commodi aspernatur ullam ad. Nulla quidem
+fugiat explicabo quo dolor hic.
+
+Rerum dolore quo ratione sed aspernatur doloremque. Ut neque laudantium quae
+enim dolores et. Laudantium dolores id assumenda autem aspernatur. Accusamus
+doloribus nihil rerum et atque est aut delectus.
+
+Nulla itaque mollitia vitae accusamus. Eveniet soluta praesentium dolore harum
+culpa. Totam voluptatem non aspernatur.
+
+Eveniet in illo consequatur. Fugiat et totam unde nihil quis. Non et velit
+recusandae blanditiis unde. Eaque fugiat id pariatur. Non numquam minima aut.
+Iste eos et autem et exercitationem velit officiis vero.
+
+Ullam minima quisquam est ducimus iste. Commodi occaecati inventore provident
+voluptatem repudiandae. Quia est qui dolore sit nisi officia doloremque dolor.
+Perspiciatis tempore laudantium quia repellendus quia deleniti. Sed consequuntur
+autem quisquam aliquam.
+
+Ut dolores natus et sunt delectus nulla. Ipsum eum quia ex est ut quia. Ratione
+et eius consequatur veritatis hic expedita ea.
