@@ -37,14 +37,10 @@ $(FLATTENED_JSON_FILE): $(ARTICLE_FILE) panmeta
 	       -t panmeta/writers/default.lua \
 	       -o $@ $<
 
-outfile.tex: $(ENRICHED_JSON_FILE) $(ARTICLE_FILE)
+outfile.pdf outfile.tex: $(ENRICHED_JSON_FILE) $(ARTICLE_FILE) templates/panscimeta.latex
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_LATEX_OPTIONS) \
-	       -o $@ $<
-
-outfile.pdf: $(ENRICHED_JSON_FILE) $(ARTICLE_FILE)
-	pandoc $(PANDOC_WRITER_OPTIONS) \
-	       $(PANDOC_LATEX_OPTIONS) \
+	       --template=templates/panscimeta.latex \
 	       -o $@ $<
 
 outfile.epub: $(FLATTENED_JSON_FILE)
