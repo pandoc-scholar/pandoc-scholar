@@ -9,8 +9,10 @@ author:
       orcid: 0000-0000-0000-0000
   - John Q. Doe:
       institute: fosg
-  - John X. Doe:
+  - Peder Ås:
       institute: fosg
+  - Juan Pérez:
+      institute: acme
 institute:
   - fosg:
       name: Formatting Open Science Group
@@ -18,6 +20,8 @@ institute:
       phone: +1 (555) 423 1338
       email: '{firstname}.{lastname}\@fosg.example.com'
   - fop: Federation of Planets
+  - acme:
+      name: Acme Corporation
 ...
 
 # Abstract
