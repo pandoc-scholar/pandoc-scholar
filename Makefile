@@ -16,9 +16,8 @@ PANDOC_LATEX_OPTIONS = --latex-engine=xelatex
 
 PANDOC_NONTEX_OPTIONS = --filter pandoc-citeproc
 
-## PanMeta
-PANMETA_VERSION = v0.1.4
-PANMETA_URL = https://github.com/formatting-science/panmeta/releases/download/$(PANMETA_VERSION)/panmeta.tar.gz
+## Scholarly Metadata
+SCHOLARLY_METADATA_VERSION = v0.1.5
 
 # Panlunatic uses this variable when deciding which JSON version should be
 # emitted.
@@ -27,20 +26,20 @@ export PANDOC_VERSION
 
 all: $(OUTFILE_PREFIX).tex $(OUTFILE_PREFIX).pdf $(OUTFILE_PREFIX).epub $(OUTFILE_PREFIX).html
 
-$(ENRICHED_JSON_FILE): $(ARTICLE_FILE) panmeta
+$(ENRICHED_JSON_FILE): $(ARTICLE_FILE) scholarly-metadata
 	pandoc $(PANDOC_READER_OPTIONS) \
-	       -t panmeta/writers/affiliations.lua \
+	       -t scholarly-metadata/writers/affiliations.lua \
 	       -o $@ $<
 
-$(FLATTENED_JSON_FILE): $(ARTICLE_FILE) panmeta
+$(FLATTENED_JSON_FILE): $(ARTICLE_FILE) scholarly-metadata
 	pandoc $(PANDOC_READER_OPTIONS) \
-	       -t panmeta/writers/default.lua \
+	       -t scholarly-metadata/writers/default.lua \
 	       -o $@ $<
 
-$(OUTFILE_PREFIX).pdf $(OUTFILE_PREFIX).tex: $(ENRICHED_JSON_FILE) $(ARTICLE_FILE) templates/panscimeta.latex
+$(OUTFILE_PREFIX).pdf $(OUTFILE_PREFIX).tex: $(ENRICHED_JSON_FILE) $(ARTICLE_FILE) templates/pandoc-scholar.latex
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_LATEX_OPTIONS) \
-	       --template=templates/panscimeta.latex \
+	       --template=./templates/pandoc-scholar.latex \
 	       -o $@ $<
 
 $(OUTFILE_PREFIX).epub: $(FLATTENED_JSON_FILE)
@@ -57,7 +56,7 @@ $(OUTFILE_PREFIX).html: $(FLATTENED_JSON_FILE)
 	       -o $@ $<
 
 $(OUTFILE_PREFIX).jsonld: $(ARTICLE_FILE) $(BIBLIOGRAPHY_FILE)
-	pandoc -t panmeta/writers/jsonld.lua \
+	pandoc -t scholarly-metadata/writers/jsonld.lua \
 	       --metadata "bibliography:$(BIBLIOGRAPHY_FILE)" \
 	       --output $@ $<
 
@@ -68,9 +67,9 @@ $(OUTFILE_PREFIX).txt: $(ARTICLE_FILE)
 clean:
 	rm -f $(OUTFILE_PREFIX).*
 
-panmeta:
+scholarly-metadata:
 	curl --location --remote-name \
-		https://github.com/formatting-science/panmeta/releases/download/$(PANMETA_VERSION)/panmeta.tar.gz
-	tar zvxf panmeta.tar.gz
+		https://github.com/pandoc-scholar/scholarly-metadata/releases/download/$(SCHOLARLY_METADATA_VERSION)/scholarly-metadata.tar.gz
+	tar zvxf scholarly-metadata.tar.gz
 
 .PHONY: all clean release

@@ -2,5 +2,5 @@
 /outfile.*
 
 # panmeta files
-/panmeta
+/scholarly-metadata
 *.tar.gz
