@@ -3,8 +3,9 @@
 --
 -- Copyright (c) 2017 Albert Krewinkel, Robert Winkler
 --
--- This library is free software; you can redistribute it and/or modify it
--- under the terms of the ISC license. See LICENSE for details.
+-- This program is free software; you can redistribute it and/or modify it
+-- under the terms of the GNU public license version 2 or later.
+-- See the LICENSE file for details.
 
 package.path = package.path .. ";scholarly-metadata/?.lua"
 
