@@ -1,0 +1,37 @@
+sudo: false
+language: generic
+
+env:
+  - PANDOC_VERSION=1.19.1-1
+
+addons:
+  apt:
+    packages:
+      - texlive-xetex
+      - texlive-latex-recommended
+      - texlive-latex-extra
+      - lmodern
+
+before_install:
+  # make archive
+  - make dist/pandoc-scholar.tar.gz
+  # install pandoc
+  - DOWNLOAD_URL="https://github.com/jgm/pandoc/releases/download"
+  - mkdir -p ${HOME}/.local
+  - travis_retry curl --location --silent
+      ${DOWNLOAD_URL}/${PANDOC_VERSION%-*}/pandoc-${PANDOC_VERSION}-amd64.deb
+      -o /tmp/pandoc.deb
+  - ar p /tmp/pandoc.deb data.tar.gz | tar xvz --strip-components 2 -C $HOME/.local/
+  # Set path to include pandoc executable
+  - PATH="${HOME}/.local/bin:$PATH"
+
+install:
+  - tar zvxf dist/pandoc-scholar.tar.gz
+
+script:
+  # Make sure that all formats are generated without error
+  - (cd pandoc-scholar && make all)
+
+before_deploy:
+  - make dist-clean
+  - make archives
