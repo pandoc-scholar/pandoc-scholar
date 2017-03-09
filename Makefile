@@ -18,7 +18,7 @@ PANDOC_LATEX_OPTIONS = --latex-engine=xelatex
 PANDOC_NONTEX_OPTIONS = --filter pandoc-citeproc
 
 ## Scholarly Metadata
-SCHOLARLY_METADATA_VERSION = v0.1.5
+SCHOLARLY_METADATA_VERSION = v1.0.0
 
 # Panlunatic uses this variable when deciding which JSON version should be
 # emitted.
