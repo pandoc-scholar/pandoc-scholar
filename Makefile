@@ -27,14 +27,14 @@ export PANDOC_VERSION
 
 all: $(foreach extension,$(DEFAULT_EXTENSIONS),$(OUTFILE_PREFIX).$(extension) )
 
-$(ENRICHED_JSON_FILE): $(ARTICLE_FILE) scholarly-metadata
+$(ENRICHED_JSON_FILE): $(ARTICLE_FILE) scholarly-metadata writers/affiliations.lua
 	pandoc $(PANDOC_READER_OPTIONS) \
-	       -t scholarly-metadata/writers/affiliations.lua \
+	       -t writers/affiliations.lua \
 	       -o $@ $<
 
-$(FLATTENED_JSON_FILE): $(ARTICLE_FILE) scholarly-metadata
+$(FLATTENED_JSON_FILE): $(ARTICLE_FILE) scholarly-metadata writers/default.lua
 	pandoc $(PANDOC_READER_OPTIONS) \
-	       -t scholarly-metadata/writers/default.lua \
+	       -t writers/default.lua \
 	       -o $@ $<
 
 $(OUTFILE_PREFIX).pdf $(OUTFILE_PREFIX).tex: $(ENRICHED_JSON_FILE) $(ARTICLE_FILE) templates/pandoc-scholar.latex
@@ -56,8 +56,8 @@ $(OUTFILE_PREFIX).html: $(FLATTENED_JSON_FILE)
 				 --mathjax \
 	       -o $@ $<
 
-$(OUTFILE_PREFIX).jsonld: $(ARTICLE_FILE) $(BIBLIOGRAPHY_FILE)
-	pandoc -t scholarly-metadata/writers/jsonld.lua \
+$(OUTFILE_PREFIX).jsonld: $(ARTICLE_FILE) $(BIBLIOGRAPHY_FILE) writers/jsonld.lua
+	pandoc -t writers/jsonld.lua \
 	       --metadata "bibliography:$(BIBLIOGRAPHY_FILE)" \
 	       --output $@ $<
 
@@ -70,12 +70,15 @@ $(OUTFILE_PREFIX).jats: $(ENRICHED_JSON_FILE) jats/default.jats
 	       --template jats/default.jats \
 	       -o $@ $<
 
-clean:
-	rm -f $(OUTFILE_PREFIX).*
-
 scholarly-metadata:
 	curl --location --remote-name \
 		https://github.com/pandoc-scholar/scholarly-metadata/releases/download/$(SCHOLARLY_METADATA_VERSION)/scholarly-metadata.tar.gz
 	tar zvxf scholarly-metadata.tar.gz
 
-.PHONY: all clean release
+clean:
+	rm -f $(OUTFILE_PREFIX).*
+
+dist-clean: clean
+	rm -rf scholarly-metadata scholarly-metadata.tar.gz
+
+.PHONY: all clean archives
