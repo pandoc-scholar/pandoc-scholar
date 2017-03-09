@@ -74,6 +74,20 @@ scholarly-metadata:
 	curl --location --remote-name \
 		https://github.com/pandoc-scholar/scholarly-metadata/releases/download/$(SCHOLARLY_METADATA_VERSION)/scholarly-metadata.tar.gz
 	tar zvxf scholarly-metadata.tar.gz
+	rm -f scholarly-metadata.tar.gz
+
+archives: dist/pandoc-scholar.zip dist/pandoc-scholar.tar.gz
+
+dist/pandoc-scholar: scholarly-metadata LICENSE Makefile README.md example jats templates writers
+	mkdir -p dist/pandoc-scholar
+	rm -rf dist/pandoc-scholar/*
+	cp -av $^ dist/pandoc-scholar
+
+dist/pandoc-scholar.tar.gz: dist/pandoc-scholar
+	tar zvcf dist/pandoc-scholar.tar.gz -C dist pandoc-scholar
+
+dist/pandoc-scholar.zip: dist/pandoc-scholar
+	(cd dist && zip -r pandoc-scholar.zip pandoc-scholar)
 
 clean:
 	rm -f $(OUTFILE_PREFIX).*
