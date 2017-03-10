@@ -2,8 +2,9 @@ Pandoc Scholar
 ==============
 
 [![release shield]](https://github.com/pandoc-scholar/pandoc-scholar/releases)
+[![DOI]](https://zenodo.org/badge/latestdoi/82204858)
 [![license shield]](./LICENSE)
-[![build]](https://travis-ci.org/pandoc-scholar/pandoc-scholar)
+[![build status]](https://travis-ci.org/pandoc-scholar/pandoc-scholar)
 
 Create beautiful and semantically meaningful articles with pandoc. This package
 provides utilities to make publishing of scientific articles as simple and
@@ -12,6 +13,7 @@ pleasant as possible.
 [release shield]: https://img.shields.io/github/release/pandoc-scholar/pandoc-scholar.svg
 [license shield]: https://img.shields.io/github/license/pandoc-scholar/pandoc-scholar.svg
 [build status]:   https://img.shields.io/travis/pandoc-scholar/pandoc-scholar/master.svg
+[DOI]: https://zenodo.org/badge/82204858.svg
 
 Prerequisites
 -------------
