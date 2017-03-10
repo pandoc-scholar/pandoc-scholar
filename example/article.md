@@ -22,6 +22,7 @@ institute:
   - fop: Federation of Planets
   - acme:
       name: Acme Corporation
+bibliography: example/bibliography.bib
 ...
 
 # Abstract
