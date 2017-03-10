@@ -1,24 +1,29 @@
-ARTICLE_FILE = example/article.md
-BIBLIOGRAPHY_FILE = example/bibliography.bib
-OUTFILE_PREFIX = outfile
-DEFAULT_EXTENSIONS = tex pdf epub html jats
+ARTICLE_FILE          ?= example/article.md
+OUTFILE_PREFIX        ?= outfile
+DEFAULT_EXTENSIONS    ?= tex pdf epub html jats
 
-ENRICHED_JSON_FILE = $(OUTFILE_PREFIX).enriched.json
-FLATTENED_JSON_FILE = $(OUTFILE_PREFIX).flattened.json
+ENRICHED_JSON_FILE    ?= $(OUTFILE_PREFIX).enriched.json
+FLATTENED_JSON_FILE   ?= $(OUTFILE_PREFIX).flattened.json
 
 ## Pandoc options
-PANDOC_READER_OPTIONS = --smart
+PANDOC_LATEX_OPTIONS  ?= --latex-engine=xelatex
+PANDOC_NONTEX_OPTIONS ?= --filter pandoc-citeproc
 
+PANDOC_READER_OPTIONS ?= --smart
+
+ifndef PANDOC_WRITER_OPTIONS
 PANDOC_WRITER_OPTIONS = --standalone
+ifdef BIBLIOGRAPHY_FILE
 PANDOC_WRITER_OPTIONS += --metadata "bibliography:$(BIBLIOGRAPHY_FILE)"
 PANDOC_WRITER_OPTIONS += --bibliography=$(BIBLIOGRAPHY_FILE)
+endif
+endif
 
-PANDOC_LATEX_OPTIONS = --latex-engine=xelatex
-
-PANDOC_NONTEX_OPTIONS = --filter pandoc-citeproc
+PANDOC_SCHOLAR_PATH   ?= .
 
 ## Scholarly Metadata
 SCHOLARLY_METADATA_VERSION = v1.0.0
+SCHOLARLY_METADATA_URL = https://github.com/pandoc-scholar/scholarly-metadata/releases/download/
 
 # Panlunatic uses this variable when deciding which JSON version should be
 # emitted.
@@ -27,20 +32,26 @@ export PANDOC_VERSION
 
 all: $(foreach extension,$(DEFAULT_EXTENSIONS),$(OUTFILE_PREFIX).$(extension) )
 
-$(ENRICHED_JSON_FILE): $(ARTICLE_FILE) scholarly-metadata writers/affiliations.lua
+$(ENRICHED_JSON_FILE): $(ARTICLE_FILE) \
+                $(PANDOC_SCHOLAR_PATH)/scholarly-metadata \
+                $(PANDOC_SCHOLAR_PATH)/writers/affiliations.lua
 	pandoc $(PANDOC_READER_OPTIONS) \
-	       -t writers/affiliations.lua \
+	       -t $(PANDOC_SCHOLAR_PATH)/writers/affiliations.lua \
 	       -o $@ $<
 
-$(FLATTENED_JSON_FILE): $(ARTICLE_FILE) scholarly-metadata writers/default.lua
+$(FLATTENED_JSON_FILE): $(ARTICLE_FILE) \
+                $(PANDOC_SCHOLAR_PATH)/scholarly-metadata \
+                $(PANDOC_SCHOLAR_PATH)/writers/default.lua
 	pandoc $(PANDOC_READER_OPTIONS) \
-	       -t writers/default.lua \
+	       -t $(PANDOC_SCHOLAR_PATH)/writers/default.lua \
 	       -o $@ $<
 
-$(OUTFILE_PREFIX).pdf $(OUTFILE_PREFIX).tex: $(ENRICHED_JSON_FILE) $(ARTICLE_FILE) templates/pandoc-scholar.latex
+$(OUTFILE_PREFIX).pdf $(OUTFILE_PREFIX).tex: \
+                $(ENRICHED_JSON_FILE) $(ARTICLE_FILE)  \
+                $(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.latex
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_LATEX_OPTIONS) \
-	       --template=./templates/pandoc-scholar.latex \
+	       --template=$(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.latex \
 	       -o $@ $<
 
 $(OUTFILE_PREFIX).epub: $(FLATTENED_JSON_FILE)
@@ -56,8 +67,10 @@ $(OUTFILE_PREFIX).html: $(FLATTENED_JSON_FILE)
 				 --mathjax \
 	       -o $@ $<
 
-$(OUTFILE_PREFIX).jsonld: $(ARTICLE_FILE) $(BIBLIOGRAPHY_FILE) writers/jsonld.lua
-	pandoc -t writers/jsonld.lua \
+$(OUTFILE_PREFIX).jsonld: $(ARTICLE_FILE) \
+                $(BIBLIOGRAPHY_FILE) \
+                $(PANDOC_SCHOLAR_PATH)/writers/jsonld.lua
+	pandoc -t $(PANDOC_SCHOLAR_PATH)/writers/jsonld.lua \
 	       --metadata "bibliography:$(BIBLIOGRAPHY_FILE)" \
 	       --output $@ $<
 
@@ -65,20 +78,25 @@ $(OUTFILE_PREFIX).txt: $(ARTICLE_FILE)
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       --output $@ $<
 
-$(OUTFILE_PREFIX).jats: $(ENRICHED_JSON_FILE) jats/default.jats
-	pandoc -t jats/JATS.lua \
-	       --template jats/default.jats \
+$(OUTFILE_PREFIX).jats: \
+                $(ENRICHED_JSON_FILE) \
+                $(PANDOC_SCHOLAR_PATH)/jats/default.jats
+	pandoc -t $(PANDOC_SCHOLAR_PATH)/jats/JATS.lua \
+	       --template $(PANDOC_SCHOLAR_PATH)/jats/default.jats \
 	       -o $@ $<
 
 scholarly-metadata:
 	curl --location --remote-name \
-		https://github.com/pandoc-scholar/scholarly-metadata/releases/download/$(SCHOLARLY_METADATA_VERSION)/scholarly-metadata.tar.gz
+		$(SCHOLARLY_METADATA_VERSION)/scholarly-metadata.tar.gz
 	tar zvxf scholarly-metadata.tar.gz
 	rm -f scholarly-metadata.tar.gz
 
 archives: dist/pandoc-scholar.zip dist/pandoc-scholar.tar.gz
 
-dist/pandoc-scholar: scholarly-metadata LICENSE Makefile README.md example jats templates writers
+dist/pandoc-scholar: \
+                scholarly-metadata \
+                LICENSE Makefile README.md \
+                example jats templates writers
 	mkdir -p dist/pandoc-scholar
 	rm -rf dist/pandoc-scholar/*
 	cp -av $^ dist/pandoc-scholar
