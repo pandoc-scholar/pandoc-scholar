@@ -1,6 +1,6 @@
 ARTICLE_FILE          ?= example/article.md
 OUTFILE_PREFIX        ?= outfile
-DEFAULT_EXTENSIONS    ?= tex pdf epub html jats
+DEFAULT_EXTENSIONS    ?= tex pdf docx odt epub html jats
 
 ENRICHED_JSON_FILE    ?= $(OUTFILE_PREFIX).enriched.json
 FLATTENED_JSON_FILE   ?= $(OUTFILE_PREFIX).flattened.json
@@ -18,6 +18,13 @@ ifdef BIBLIOGRAPHY_FILE
 PANDOC_WRITER_OPTIONS += --metadata "bibliography:$(BIBLIOGRAPHY_FILE)"
 PANDOC_WRITER_OPTIONS += --bibliography=$(BIBLIOGRAPHY_FILE)
 endif
+endif
+
+ifdef ODT_REFERENCE_FILE
+ODT_REFERENCE_FILE_OPTION  ?= --reference-odt=ODT_REFERENCE_FILE
+endif
+ifdef DOCX_REFERENCE_FILE
+DOCX_REFERENCE_FILE_OPTION ?= --reference-docx=DOCX_REFERENCE_FILE
 endif
 
 ## The path to the directory in which this file resides. This allows users to
@@ -56,6 +63,18 @@ $(OUTFILE_PREFIX).pdf $(OUTFILE_PREFIX).tex: \
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_LATEX_OPTIONS) \
 	       --template=$(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.latex \
+	       -o $@ $<
+
+$(OUTFILE_PREFIX).docx: $(FLATTENED_JSON_FILE)
+	pandoc $(PANDOC_WRITER_OPTIONS) \
+	       $(PANDOC_NONTEX_OPTIONS) \
+	       $(DOCX_REFERENCE_FILE_OPTION) \
+	       -o $@ $<
+
+$(OUTFILE_PREFIX).odt: $(FLATTENED_JSON_FILE)
+	pandoc $(PANDOC_WRITER_OPTIONS) \
+	       $(PANDOC_NONTEX_OPTIONS) \
+	       $(ODT_REFERENCE_FILE_OPTION) \
 	       -o $@ $<
 
 $(OUTFILE_PREFIX).epub: $(FLATTENED_JSON_FILE)
