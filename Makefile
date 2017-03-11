@@ -5,6 +5,9 @@ DEFAULT_EXTENSIONS    ?= tex pdf docx odt epub html jats
 ENRICHED_JSON_FILE    ?= $(OUTFILE_PREFIX).enriched.json
 FLATTENED_JSON_FILE   ?= $(OUTFILE_PREFIX).flattened.json
 
+TEMPLATE_FILE_LATEX   ?= $(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.latex
+TEMPLATE_FILE_JATS    ?= $(PANDOC_SCHOLAR_PATH)/jats/default.jats
+
 ## Pandoc options
 PANDOC_READER_OPTIONS ?= --smart
 
@@ -23,14 +26,25 @@ PANDOC_HTML_OPTIONS   ?=
 PANDOC_EPUB_OPTIONS   ?=
 ifndef PANDOC_LATEX_OPTIONS
 PANDOC_LATEX_OPTIONS   = --latex-engine=xelatex
-PANDOC_LATEX_OPTIONS  += --template=$(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.latex
 endif
 
 ifdef ODT_REFERENCE_FILE
-ODT_REFERENCE_FILE_OPTION  ?= --reference-odt=$(ODT_REFERENCE_FILE)
+PANDOC_ODT_OPTIONS    += --reference-odt=$(ODT_REFERENCE_FILE)
 endif
 ifdef DOCX_REFERENCE_FILE
-DOCX_REFERENCE_FILE_OPTION ?= --reference-docx=$(DOCX_REFERENCE_FILE)
+PANDOC_DOCX_OPTIONS   += --reference-docx=$(DOCX_REFERENCE_FILE)
+endif
+ifdef TEMPLATE_FILE_LATEX
+PANDOC_LATEX_OPTIONS   += --template=$(TEMPLATE_FILE_LATEX)
+endif
+ifdef TEMPLATE_FILE_HTML
+PANDOC_HTML_OPTIONS   += --template=$(TEMPLATE_FILE_HTML)
+endif
+ifdef TEMPLATE_FILE_EPUB
+PANDOC_EPUB_OPTIONS   += --template=$(TEMPLATE_FILE_EPUB)
+endif
+ifdef TEMPLATE_FILE_JATS
+PANDOC_JATS_OPTIONS   += --template=$(TEMPLATE_FILE_JATS)
 endif
 
 ## The path to the directory in which this file resides. This allows users to
@@ -47,7 +61,7 @@ SCHOLARLY_METADATA_URL = https://github.com/pandoc-scholar/scholarly-metadata/re
 PANDOC_VERSION := $(shell pandoc -v | sed -ne 's/^pandoc //gp')
 export PANDOC_VERSION
 
-all: $(foreach extension,$(DEFAULT_EXTENSIONS),$(OUTFILE_PREFIX).$(extension) )
+all: $(foreach extension,$(DEFAULT_EXTENSIONS),$(OUTFILE_PREFIX).$(extension))
 
 $(OUTFILE_PREFIX).enriched.json: $(ARTICLE_FILE) \
 		$(PANDOC_SCHOLAR_PATH)/scholarly-metadata \
@@ -63,29 +77,33 @@ $(OUTFILE_PREFIX).flattened.json: $(ARTICLE_FILE) \
 	       -t $(PANDOC_SCHOLAR_PATH)/writers/default.lua \
 	       --output $@ $<
 
-$(OUTFILE_PREFIX).pdf $(OUTFILE_PREFIX).tex: $(ENRICHED_JSON_FILE)
+$(OUTFILE_PREFIX).pdf $(OUTFILE_PREFIX).tex: \
+		$(ENRICHED_JSON_FILE) \
+		$(TEMPLATE_FILE_LATEX)
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_LATEX_OPTIONS) \
 	       --output $@ $<
 
-$(OUTFILE_PREFIX).docx: $(FLATTENED_JSON_FILE)
+$(OUTFILE_PREFIX).docx: $(FLATTENED_JSON_FILE) \
+		$(ODT_REFERENCE_FILE)
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_DOCX_OPTIONS) \
-	       $(DOCX_REFERENCE_FILE_OPTION) \
 	       --output $@ $<
 
-$(OUTFILE_PREFIX).odt: $(FLATTENED_JSON_FILE)
+$(OUTFILE_PREFIX).odt: $(FLATTENED_JSON_FILE) \
+		$(ODT_REFERENCE_FILE)
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_ODT_OPTIONS) \
-	       $(ODT_REFERENCE_FILE_OPTION) \
 	       --output $@ $<
 
-$(OUTFILE_PREFIX).epub: $(FLATTENED_JSON_FILE)
+$(OUTFILE_PREFIX).epub: $(FLATTENED_JSON_FILE) \
+		$(TEMPLATE_FILE_EPUB)
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_EPUB_OPTIONS) \
 	       --output $@ $<
 
-$(OUTFILE_PREFIX).html: $(FLATTENED_JSON_FILE)
+$(OUTFILE_PREFIX).html: $(FLATTENED_JSON_FILE) \
+		$(TEMPLATE_FILE_HTML)
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_HTML_OPTIONS) \
 	       --mathjax \
@@ -104,9 +122,10 @@ $(OUTFILE_PREFIX).txt: $(ARTICLE_FILE)
 
 $(OUTFILE_PREFIX).jats: \
 		$(ENRICHED_JSON_FILE) \
-		$(PANDOC_SCHOLAR_PATH)/jats/default.jats
+		$(PANDOC_SCHOLAR_PATH)/scholarly-metadata \
+		$(TEMPLATE_FILE_JATS)
 	pandoc -t $(PANDOC_SCHOLAR_PATH)/jats/JATS.lua \
-	       --template $(PANDOC_SCHOLAR_PATH)/jats/default.jats \
+	       $(PANDOC_JATS_OPTIONS) \
 	       --output $@ $<
 
 ### GET DEPENDENCIES
