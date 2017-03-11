@@ -1,6 +1,6 @@
 ARTICLE_FILE          ?= example/article.md
 OUTFILE_PREFIX        ?= outfile
-DEFAULT_EXTENSIONS    ?= tex pdf docx odt epub html jats
+DEFAULT_EXTENSIONS    ?= latex pdf docx odt epub html jats
 
 ENRICHED_JSON_FILE    ?= $(OUTFILE_PREFIX).enriched.json
 FLATTENED_JSON_FILE   ?= $(OUTFILE_PREFIX).flattened.json
@@ -77,7 +77,7 @@ $(OUTFILE_PREFIX).flattened.json: $(ARTICLE_FILE) \
 	       -t $(PANDOC_SCHOLAR_PATH)/writers/default.lua \
 	       --output $@ $<
 
-$(OUTFILE_PREFIX).pdf $(OUTFILE_PREFIX).tex: \
+$(OUTFILE_PREFIX).pdf $(OUTFILE_PREFIX).latex: \
 		$(ENRICHED_JSON_FILE) \
 		$(TEMPLATE_FILE_LATEX)
 	pandoc $(PANDOC_WRITER_OPTIONS) \
