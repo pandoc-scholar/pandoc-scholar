@@ -39,6 +39,8 @@ required scripts and templates.
 Usage
 -----
 
+### Quickstart
+
 Run `make` to convert the example article into all supported output formats. The
 markdown file used to create the output files can be configured via the
 `ARTICLE_FILE` variable, either directly in the Makefile or by specifying the
@@ -46,6 +48,53 @@ value on the command line.
 
     make ARTICLE_FILE=your-file.md
 
+### Includable Makefile
+
+The *Makefile*, which does most of the work, is written in a style that makes it
+simple to include it from within other Makefiles. This method allows to keep
+`pandoc-scholar` installed in a central location and to use the same instance
+for multiple projects. The `ARTICLE_FILE` and `PANDOC_SCHOLAR_PATH` variables
+must be defined in the including Makefile:
+
+``` Makefile
+ARTICLE_FILE        = your-file.md
+PANDOC_SCHOLAR_PATH = ../path-to-pandoc-scholar-folder
+include $(PANDOC_SCHOLAR_PATH)/Makefile
+```
+
+Calling `make` as usual will create all configured output formats. Per default,
+this creates *pdf*, *latex*, *docx*, *odt*, *epub*, *html*, and *jats* output.
+The set of output files can be reduced by setting the `DEFAULT_EXTENSIONS`
+variable to a subset of the aforementioned formats.
+
+Alternative template files can be set using `TEMPLATE_FILE_<FORMAT>` variables,
+where `<FORMAT>` is one of *HTML*, *EPUB*, *JATS*, or *LATEX*. The reference
+files for ODT and DOCX output can be changed using `ODT_REFERENCE_FILE` and
+`DOCX_REFERENCE_FILE`, respectively.
+
+Additional pandoc options can be given on a per-format basis using
+`PANDOC_<FORMAT>_OPTIONS` variables. The following uses an actual Makefile as an
+example to demonstrate usage of those options.
+
+``` Makefile
+ARTICLE_FILE        = open-science-formatting.md
+
+PANDOC_LATEX_OPTIONS  = --latex-engine=xelatex
+PANDOC_LATEX_OPTIONS += --csl=peerj.csl
+PANDOC_LATEX_OPTIONS += --filter=pandoc-citeproc
+PANDOC_LATEX_OPTIONS += -M fontsize=10pt
+PANDOC_LATEX_OPTIONS += -M classoption=fleqn
+
+PANDOC_HTML_OPTIONS   = --toc
+PANDOC_EPUB_OPTIONS   = --toc
+
+DOCX_REFERENCE_FILE   = pandoc-manuscript.docx
+ODT_REFERENCE_FILE    = pandoc-manuscript.odt
+TEMPLATE_FILE_LATEX   = pandoc-peerj.latex
+
+PANDOC_SCHOLAR_PATH = pandoc-scholar
+include $(PANDOC_SCHOLAR_PATH)/Makefile
+```
 
 License
 -------
