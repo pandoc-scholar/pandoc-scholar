@@ -6,9 +6,6 @@ ENRICHED_JSON_FILE    ?= $(OUTFILE_PREFIX).enriched.json
 FLATTENED_JSON_FILE   ?= $(OUTFILE_PREFIX).flattened.json
 
 ## Pandoc options
-PANDOC_LATEX_OPTIONS  ?= --latex-engine=xelatex
-PANDOC_NONTEX_OPTIONS ?=
-
 PANDOC_READER_OPTIONS ?= --smart
 
 ifndef PANDOC_WRITER_OPTIONS
@@ -20,11 +17,20 @@ PANDOC_WRITER_OPTIONS += --bibliography=$(BIBLIOGRAPHY_FILE)
 endif
 endif
 
+PANDOC_ODT_OPTIONS    ?=
+PANDOC_DOCX_OPTIONS   ?=
+PANDOC_HTML_OPTIONS   ?=
+PANDOC_EPUB_OPTIONS   ?=
+ifndef PANDOC_LATEX_OPTIONS
+PANDOC_LATEX_OPTIONS   = --latex-engine=xelatex
+PANDOC_LATEX_OPTIONS  += --template=$(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.latex
+endif
+
 ifdef ODT_REFERENCE_FILE
-ODT_REFERENCE_FILE_OPTION  ?= --reference-odt=ODT_REFERENCE_FILE
+ODT_REFERENCE_FILE_OPTION  ?= --reference-odt=$(ODT_REFERENCE_FILE)
 endif
 ifdef DOCX_REFERENCE_FILE
-DOCX_REFERENCE_FILE_OPTION ?= --reference-docx=DOCX_REFERENCE_FILE
+DOCX_REFERENCE_FILE_OPTION ?= --reference-docx=$(DOCX_REFERENCE_FILE)
 endif
 
 ## The path to the directory in which this file resides. This allows users to
@@ -48,47 +54,42 @@ $(OUTFILE_PREFIX).enriched.json: $(ARTICLE_FILE) \
 		$(PANDOC_SCHOLAR_PATH)/writers/affiliations.lua
 	pandoc $(PANDOC_READER_OPTIONS) \
 	       -t $(PANDOC_SCHOLAR_PATH)/writers/affiliations.lua \
-	       -o $@ $<
+	       --output $@ $<
 
 $(OUTFILE_PREFIX).flattened.json: $(ARTICLE_FILE) \
 		$(PANDOC_SCHOLAR_PATH)/scholarly-metadata \
 		$(PANDOC_SCHOLAR_PATH)/writers/default.lua
 	pandoc $(PANDOC_READER_OPTIONS) \
 	       -t $(PANDOC_SCHOLAR_PATH)/writers/default.lua \
-	       -o $@ $<
+	       --output $@ $<
 
-$(OUTFILE_PREFIX).pdf $(OUTFILE_PREFIX).tex: \
-		$(ENRICHED_JSON_FILE) \
-		$(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.latex
+$(OUTFILE_PREFIX).pdf $(OUTFILE_PREFIX).tex: $(ENRICHED_JSON_FILE)
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_LATEX_OPTIONS) \
-	       --template=$(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.latex \
-	       -o $@ $<
+	       --output $@ $<
 
 $(OUTFILE_PREFIX).docx: $(FLATTENED_JSON_FILE)
 	pandoc $(PANDOC_WRITER_OPTIONS) \
-	       $(PANDOC_NONTEX_OPTIONS) \
+	       $(PANDOC_DOCX_OPTIONS) \
 	       $(DOCX_REFERENCE_FILE_OPTION) \
-	       -o $@ $<
+	       --output $@ $<
 
 $(OUTFILE_PREFIX).odt: $(FLATTENED_JSON_FILE)
 	pandoc $(PANDOC_WRITER_OPTIONS) \
-	       $(PANDOC_NONTEX_OPTIONS) \
+	       $(PANDOC_ODT_OPTIONS) \
 	       $(ODT_REFERENCE_FILE_OPTION) \
-	       -o $@ $<
+	       --output $@ $<
 
 $(OUTFILE_PREFIX).epub: $(FLATTENED_JSON_FILE)
 	pandoc $(PANDOC_WRITER_OPTIONS) \
-	       $(PANDOC_NONTEX_OPTIONS) \
-	       --toc \
-	       -o $@ $<
+	       $(PANDOC_EPUB_OPTIONS) \
+	       --output $@ $<
 
 $(OUTFILE_PREFIX).html: $(FLATTENED_JSON_FILE)
 	pandoc $(PANDOC_WRITER_OPTIONS) \
-	       $(PANDOC_NONTEX_OPTIONS) \
-	       --toc \
+	       $(PANDOC_HTML_OPTIONS) \
 	       --mathjax \
-	       -o $@ $<
+	       --output $@ $<
 
 $(OUTFILE_PREFIX).jsonld: $(ARTICLE_FILE) \
 		$(BIBLIOGRAPHY_FILE) \
@@ -106,7 +107,7 @@ $(OUTFILE_PREFIX).jats: \
 		$(PANDOC_SCHOLAR_PATH)/jats/default.jats
 	pandoc -t $(PANDOC_SCHOLAR_PATH)/jats/JATS.lua \
 	       --template $(PANDOC_SCHOLAR_PATH)/jats/default.jats \
-	       -o $@ $<
+	       --output $@ $<
 
 ### GET DEPENDENCIES
 
