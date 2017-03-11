@@ -132,7 +132,7 @@ $(OUTFILE_PREFIX).jats: \
 
 scholarly-metadata:
 	curl --location --remote-name \
-		$(SCHOLARLY_METADATA_VERSION)/scholarly-metadata.tar.gz
+		$(SCHOLARLY_METADATA_URL)/$(SCHOLARLY_METADATA_VERSION)/scholarly-metadata.tar.gz
 	tar zvxf scholarly-metadata.tar.gz
 	rm -f scholarly-metadata.tar.gz
 
