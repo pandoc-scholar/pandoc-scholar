@@ -3,6 +3,8 @@
 ## this variable to the correct value.
 PANDOC_SCHOLAR_PATH   ?= $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
+# include local makefile to allow easy overwriting of variables
+-include local.mk
 include $(PANDOC_SCHOLAR_PATH)/pandoc-options.inc.mk
 
 # Configuration (overwrite using Makefile.local.in if necessary)
