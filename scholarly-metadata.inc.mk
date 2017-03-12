@@ -5,7 +5,7 @@
 SCHOLARLY_METADATA_VERSION = v1.0.0
 SCHOLARLY_METADATA_URL = https://github.com/pandoc-scholar/scholarly-metadata/releases/download/
 
-$(PANDOC_SCHOLAR_PATH)/scholarly-metadata:
+$(PANDOC_SCHOLAR_PATH)/scholarly-metadata scholarly-metadata:
 	curl --location --remote-name \
 		$(SCHOLARLY_METADATA_URL)/$(SCHOLARLY_METADATA_VERSION)/scholarly-metadata.tar.gz
 	tar zvxf scholarly-metadata.tar.gz -C $(PANDOC_SCHOLAR_PATH)
