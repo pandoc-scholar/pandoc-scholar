@@ -1,0 +1,100 @@
+<!doctype html>
+<!--
+Template created by Andrew G. York, based on this theme by Diana Mounter:
+https://github.com/broccolini/dinky, which mentioned that
+attribution is appreciated. Thanks, broccolini! -->
+<html lang="en">
+<head>
+  <base target="_blank"/>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
+$for(author-meta)$
+  <meta name="author" content="$author-meta$"/>
+$endfor$
+$if(date-meta)$
+  <meta name="dcterms.date" content="$date-meta$"/>
+$endif$
+$if(keywords)$
+  <meta name="keywords" content="$for(keywords)$$keywords$$sep$, $endfor$"/>
+$endif$
+  <title>$if(title-prefix)$$title-prefix$ – $endif$$pagetitle$</title>
+  <style type="text/css">code{white-space: pre;}</style>
+$if(quotes)$
+  <style type="text/css">q { quotes: "“" "”" "‘" "’"; }</style>
+$endif$
+$if(highlighting-css)$
+  <style type="text/css">
+$highlighting-css$
+  </style>
+$endif$
+$for(css)$
+  <link rel="stylesheet" href="$css$">
+$endfor$
+$if(math)$
+  $math$
+$endif$
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+$for(header-includes)$
+  $header-includes$
+$endfor$
+</head>
+<body>
+<div class="wrapper">
+$if(project)$
+<header class="page-header">
+  <h1 class="header">$project.title$</h1>
+  <ul>
+$if(project.zip-url)$
+    <li class="download"><a class="buttons" href="$project.zip-url$">Download ZIP</a></li>
+$endif$
+$if(project.github-url)$
+    <li><a class="buttons github" href="$project.github-url$">View On GitHub</a></li>
+$endif$
+$if(project.pdf-url)$
+    <li><a class="buttons pdf" href="$project.pdf-url$">Download PDF</a></li>
+$endif$
+  </ul>
+</header>
+$endif$
+<article typeof="ScholarlyArticle" vocab="http://schema.org/">
+    <!-- <header class="article-header"> -->
+<h1 property="headline">$title$</h1>
+$if(subtitle)$
+<p property="alternativeHeadline" class="subtitle">$subtitle$</p>
+$endif$
+<!-- </header> -->
+<p class="author-list">
+$for(author)$
+  $if(author.last)$and $endif$<span property="author" typeof="Person">
+    $author.name$</span><sup>$for(author.institute_indices)$$author.institute_indices$$sep$, $endfor$</sup>$sep$,
+$endfor$
+</p>
+<div class="author_affiliations">
+$for(institute)$
+  <div class="affiliation"><sup>$institute.index$</sup>$institute.name$
+  $if(institute.address)$, $institute.address$$endif$
+  </div>
+$endfor$
+</div>
+$if(abstract)$<p class="abstract" property="description">$abstract$</p>$endif$
+$if(doi)$<p><a href="https://doi.org/$doi$">doi: $doi$</a></p>$endif$
+
+$for(include-before)$
+$include-before$
+
+$endfor$
+
+<div property="articleBody" class="article-body">
+$body$
+</div>
+</article>
+<footer>
+  <p><small>Generated using <a href="https://github.com/pandoc-scholar/pandoc-scholar">pandoc scholar</a></small></p>
+</footer>
+</div>
+ <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+</body>
+</html>

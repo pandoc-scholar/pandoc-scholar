@@ -2,7 +2,10 @@
 # ===================
 
 TEMPLATE_FILE_LATEX   ?= $(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.latex
+TEMPLATE_FILE_HTML    ?= $(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.html
 TEMPLATE_FILE_JATS    ?= $(PANDOC_SCHOLAR_PATH)/jats/default.jats
+
+TEMPLATE_STYLE_HTML   ?= $(PANDOC_SCHOLAR_PATH)/templates/styles/pandoc-scholar.css
 
 ## Pandoc options
 PANDOC_READER_OPTIONS ?= --smart
@@ -31,7 +34,7 @@ ifdef DOCX_REFERENCE_FILE
 PANDOC_DOCX_OPTIONS   += --reference-docx=$(DOCX_REFERENCE_FILE)
 endif
 ifdef TEMPLATE_FILE_LATEX
-PANDOC_LATEX_OPTIONS   += --template=$(TEMPLATE_FILE_LATEX)
+PANDOC_LATEX_OPTIONS  += --template=$(TEMPLATE_FILE_LATEX)
 endif
 ifdef TEMPLATE_FILE_HTML
 PANDOC_HTML_OPTIONS   += --template=$(TEMPLATE_FILE_HTML)

@@ -59,10 +59,13 @@ $(OUTFILE_PREFIX).epub: $(FLATTENED_JSON_FILE) \
 	       $(PANDOC_EPUB_OPTIONS) \
 	       --output $@ $<
 
-$(OUTFILE_PREFIX).html: $(FLATTENED_JSON_FILE) \
-		$(TEMPLATE_FILE_HTML)
+$(OUTFILE_PREFIX).html: $(ENRICHED_JSON_FILE) \
+		$(TEMPLATE_FILE_HTML) \
+		$(TEMPLATE_STYLE_HTML)
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_HTML_OPTIONS) \
+	       --css=$(TEMPLATE_STYLE_HTML) \
+	       --self-contained \
 	       --mathjax \
 	       --output $@ $<
 
