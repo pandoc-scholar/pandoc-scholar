@@ -3,6 +3,9 @@
 ## this variable to the correct value.
 PANDOC_SCHOLAR_PATH   ?= $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
+LUA_PATH              ?= $(PANDOC_SCHOLAR_PATH)/scholarly-metadata/?.lua;;
+export LUA_PATH
+
 # include local makefile to allow easy overwriting of variables
 -include local.mk
 include $(PANDOC_SCHOLAR_PATH)/pandoc-options.inc.mk
@@ -13,6 +16,7 @@ OUTFILE_PREFIX        ?= outfile
 DEFAULT_EXTENSIONS    ?= latex pdf docx odt epub html jats
 ENRICHED_JSON_FILE    ?= $(OUTFILE_PREFIX).enriched.json
 FLATTENED_JSON_FILE   ?= $(OUTFILE_PREFIX).flattened.json
+
 
 all: $(addprefix $(OUTFILE_PREFIX).,$(DEFAULT_EXTENSIONS))
 
