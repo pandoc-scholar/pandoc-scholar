@@ -65,7 +65,7 @@ $(OUTFILE_PREFIX).html: $(ENRICHED_JSON_FILE) \
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_HTML_OPTIONS) \
 	       --css=$(TEMPLATE_STYLE_HTML) \
-	       --self-contained \
+	       -M include-headers='<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>' \
 	       --mathjax \
 	       --output $@ $<
 
