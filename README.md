@@ -99,7 +99,11 @@ include $(PANDOC_SCHOLAR_PATH)/Makefile
 License
 -------
 
-Copyright © 2016–2017  Albert Krewinkel and Robert Winkler
+Copyright © 2016–2017 Albert Krewinkel and Robert Winkler except for the
+following components:
+
+- HTML template: © 2016 Andrew G. York and Diana Mounter
+- JATS support: © 2015–2016 Martin Fenner
 
 This program is free software; you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
