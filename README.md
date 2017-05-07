@@ -6,21 +6,25 @@ Pandoc Scholar
 [![license shield]](./LICENSE)
 [![build status]](https://travis-ci.org/pandoc-scholar/pandoc-scholar)
 
-Create beautiful and semantically meaningful articles with pandoc. This package
+Create beautiful, semantically enriched articles with pandoc. This package
 provides utilities to make publishing of scientific articles as simple and
-pleasant as possible.
+pleasant as possible. It simplifies setting authors' metadata in YAML blocks,
+allows to add semantic annotation to citations, and only requires the programs
+pandoc and make. Pandoc Scholar is described in the [paper] published in PeerJ
+Computer Science.
 
 [release shield]: https://img.shields.io/github/release/pandoc-scholar/pandoc-scholar.svg
 [license shield]: https://img.shields.io/github/license/pandoc-scholar/pandoc-scholar.svg
 [build status]:   https://img.shields.io/travis/pandoc-scholar/pandoc-scholar/master.svg
 [DOI]: https://zenodo.org/badge/82204858.svg
+[paper]: https://peerj.com/preprints/2648/
 
 Prerequisites
 -------------
 
 This package builds on [pandoc](http://pandoc.org/), the universal document
-converter. See the pandoc website
-for [installation instructions](http://pandoc.org/installing.html) and
+converter. See the pandoc website for
+[installation instructions](http://pandoc.org/installing.html) and
 suggestions for LaTeX packages, which we use for PDF generation.
 
 
