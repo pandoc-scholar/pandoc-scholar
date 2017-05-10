@@ -100,6 +100,67 @@ PANDOC_SCHOLAR_PATH = pandoc-scholar
 include $(PANDOC_SCHOLAR_PATH)/Makefile
 ```
 
+Metadata Fields
+---------------
+
+Pandoc scholar supports additional functionality via metadata fields. Most
+notably, the augmentation of articles with author and affiliation data, which is
+essential for academic publishing, is greatly simplified when using pandoc
+scholar.
+
+### Authors and affiliations
+
+Most metadata should be specified in the YAML block at the top of the article.
+Author data and affiliations are taken from the *author* and *institute* field,
+respectively. Institutes can be given via user-defined abbreviations, saving
+unnecessary repetiontions while preserving readability.
+
+Example:
+
+``` yaml
+author:
+  - James Dewey Watson:
+      institute: cavendish
+  - Francis Harry Compton Crick:
+      institute: cavendish
+institute:
+  - cavendish: Cavendish Laboratory, Cambridge
+```
+
+Authors are given in the order in which they are listed, while institute order
+follows from author order.
+
+The separate institute field may add unwanted complexity in some cases. It is
+hence possible to omit it and to give the affiliations name directly in the
+author entry:
+
+``` yaml
+author:
+  - John MacFarlane:
+      institute: University of California, Berkeley
+```
+
+### Insitute address
+
+Often it is not enough to give just a name for insitutes. It is hence possible
+to add arbitrary fields. The name must then explicitely be set via the *name*
+field of the institute entry:
+
+``` yaml
+author:
+  - Robert Winkler:
+      institute: cinvestav
+institute:
+  - cinvestav:
+      name: 'CINVESTAV Unidad Irapuato, Department of Biochemistry and Biotechnology'
+      address: 'Km. 9.6 Libramiento Norte Carr. Irapuato-León, 36821 Irapuato Gto. México'
+      phone: +52 (462) 623 9635
+```
+
+Currently only the institute's address is used in the default template, but
+future extensions will be based on this convention.
+
+
 License
 -------
 
