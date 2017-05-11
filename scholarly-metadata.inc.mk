@@ -2,7 +2,7 @@
 # ==========================
 
 ## Scholarly Metadata
-SCHOLARLY_METADATA_VERSION = v1.0.0
+SCHOLARLY_METADATA_VERSION = v1.0.1
 SCHOLARLY_METADATA_URL = https://github.com/pandoc-scholar/scholarly-metadata/releases/download/
 
 $(PANDOC_SCHOLAR_PATH)/scholarly-metadata scholarly-metadata:
