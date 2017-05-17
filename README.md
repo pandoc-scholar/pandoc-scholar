@@ -140,10 +140,10 @@ author:
       institute: University of California, Berkeley
 ```
 
-### Insitute address
+### Institute address
 
-Often it is not enough to give just a name for insitutes. It is hence possible
-to add arbitrary fields. The name must then explicitely be set via the *name*
+Often it is not enough to give just a name for institutes. It is hence possible
+to add arbitrary fields. The name must then explicitly be set via the *name*
 field of the institute entry:
 
 ``` yaml
