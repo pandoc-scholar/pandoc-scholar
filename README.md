@@ -175,27 +175,17 @@ The following table contains all supported keywords and the respective CiTO
 properties. Authors are free to use the short-form, the full-length property, or
 any of the alternatives listed below.
 
-+-------------------------------+--------------+-----------------------+
-| CiTO property                 | Keyword      | alternatives          |
-+===============================+==============+=======================+
-| agrees\_with                  | agrees\_with | agree\_with           |
-+-------------------------------+--------------+-----------------------+
-| cites                         |              |                       |
-+-------------------------------+--------------+-----------------------+
-| cites\_as\_authority          | authority    | as\_authority         |
-+-------------------------------+--------------+-----------------------+
-| cites\_as\_evidence           | evidence     | as\_evidence          |
-+-------------------------------+--------------+-----------------------+
-| cites\_as\_metadata\_document | metadata     | as\_metadata_document |
-+-------------------------------+--------------+-----------------------+
-| includes\_excerpt\_from       | excerpt      | excerpt\_from         |
-+-------------------------------+--------------+-----------------------+
-| includes\_quotation\_from     | quotation    | quotation\_from       |
-+-------------------------------+--------------+-----------------------+
-| obtaines\_background\_from    | background   | background\_from      |
-+-------------------------------+--------------+-----------------------+
-| uses\_method\_in              | method       | method\_in            |
-+-------------------------------+--------------+-----------------------+
+CiTO property                 | Keyword      | alternatives
+----------------------------- | ------------ | ---------------------
+agrees\_with                  | agrees\_with | agree\_with
+cites                         |              |
+cites\_as\_authority          | authority    | as\_authority
+cites\_as\_evidence           | evidence     | as\_evidence
+cites\_as\_metadata\_document | metadata     | as\_metadata_document
+includes\_excerpt\_from       | excerpt      | excerpt\_from
+includes\_quotation\_from     | quotation    | quotation\_from
+obtaines\_background\_from    | background   | background\_from
+uses\_method\_in              | method       | method\_in
 
 Example:
 
