@@ -100,8 +100,9 @@ PANDOC_SCHOLAR_PATH = pandoc-scholar
 include $(PANDOC_SCHOLAR_PATH)/Makefile
 ```
 
-Metadata Fields
----------------
+
+Metadata Features
+-----------------
 
 Pandoc scholar supports additional functionality via metadata fields. Most
 notably, the augmentation of articles with author and affiliation data, which is
@@ -159,6 +160,46 @@ institute:
 
 Currently only the institute's address is used in the default template, but
 future extensions will be based on this convention.
+
+### Semantic citations
+
+Understanding the reason a citations is included in scholarly articles usually
+requires natural language processing of the article. However, navigating the
+current literature landscape can be improved and by having that information
+accesible and in a machine-readable form. Pandoc scholar supports the CiTO
+ontology, allowing authors to specify important meta-information on the citation
+directly while writing the text. The property is simply prepended to the
+citation key, separated by a colon: `@<property>:citationKey`.
+
+The following table contains all supported keywords and the respective CiTO
+properties. Authors are free to use the short-form, the full-length property, or
+any of the alternatives listed below.
+
++-------------------------------+--------------+-----------------------+
+| CiTO property                 | Keyword      | alternatives          |
++===============================+==============+=======================+
+| agrees\_with                  | agrees\_with | agree\_with           |
++-------------------------------+--------------+-----------------------+
+| cites                         |              |                       |
++-------------------------------+--------------+-----------------------+
+| cites\_as\_authority          | authority    | as\_authority         |
++-------------------------------+--------------+-----------------------+
+| cites\_as\_evidence           | evidence     | as\_evidence          |
++-------------------------------+--------------+-----------------------+
+| cites\_as\_metadata\_document | metadata     | as\_metadata_document |
++-------------------------------+--------------+-----------------------+
+| includes\_excerpt\_from       | excerpt      | excerpt\_from         |
++-------------------------------+--------------+-----------------------+
+| includes\_quotation\_from     | quotation    | quotation\_from       |
++-------------------------------+--------------+-----------------------+
+| obtaines\_background\_from    | background   | background\_from      |
++-------------------------------+--------------+-----------------------+
+| uses\_method\_in              | method       | method\_in            |
++-------------------------------+--------------+-----------------------+
+
+Example:
+
+    DNA strands form a double-helix [@evidence:watson_crick_1953].
 
 
 License
