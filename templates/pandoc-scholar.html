@@ -70,7 +70,7 @@ $endif$
 <p class="author-list">
 $for(author)$
   $if(author.last)$and $endif$<span property="author" typeof="Person">
-    $author.name$</span><sup>$for(author.institute_indices)$$author.institute_indices$$sep$, $endfor$</sup>$sep$,
+    $author.name$</span><sup>$if(author.correspondence)$$if(author.email)$<a href="mailto:$author.email$">✉</a> $endif$$endif$$for(author.institute_indices)$$author.institute_indices$$sep$,$endfor$$if(author.equal_contributor)$,$if(equal_contributor_symbol)$$equal_contributor_symbol$$else$*$endif$$endif$</sup>$sep$,
 $endfor$
 </p>
 <div class="author_affiliations">
@@ -84,6 +84,11 @@ $endfor$
     $if(has_equal_contributors)$
     <div class="author-contrib">
         <sup>$if(equal_contributor_symbol)$$equal_contributor_symbol$$else$*$endif$</sup>These authors contributed equally to this work
+    </div>
+    $endif$
+    $if(has_correspondence)$
+    <div class="author-correspondence">
+        Correspondence: $for(author)$$if(author.correspondence)$$if(author.email)$$author.name$ <a href="mailto:$author.email$">&lt;$author.email$&gt;</a> $endif$$endif$$endfor$
     </div>
     $endif$
 </div>

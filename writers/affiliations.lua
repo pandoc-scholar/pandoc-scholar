@@ -24,6 +24,9 @@ function Doc(body, meta, variables)
     if meta.author[i].contributed_equally then
       meta.has_equal_contributors = true
     end
+    if meta.author[i].correspondence and meta.author[i].email then
+      meta.has_correspondence = true
+    end
   end
   if next(abstract) ~= nil then
     meta.abstract = abstract
