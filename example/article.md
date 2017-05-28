@@ -7,12 +7,17 @@ author:
         - fop
       email: jane.doe@example.com
       orcid: 0000-0000-0000-0000
+      equal_contributor: true
+      correspondence: true
   - John Q. Doe:
       institute: fosg
+      equal_contributor: true
   - Peder Ås:
       institute: fosg
   - Juan Pérez:
       institute: acme
+      email: juan.perez@example.edu
+      correspondence: true
 institute:
   - fosg:
       name: Formatting Open Science Group
