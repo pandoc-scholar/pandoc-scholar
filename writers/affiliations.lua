@@ -20,6 +20,11 @@ local in_abstract = false
 function Doc(body, meta, variables)
   meta.author, meta.institute =
     scholarlymeta.canonicalize_authors(meta.author, meta.institute)
+  for i = 1, #meta.author do
+    if meta.author[i].contributed_equally then
+      meta.has_equal_contributors = true
+    end
+  end
   if next(abstract) ~= nil then
     meta.abstract = abstract
   else

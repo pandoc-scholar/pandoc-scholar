@@ -80,6 +80,13 @@ $for(institute)$
   </div>
 $endfor$
 </div>
+<div class="author-info">
+    $if(has_equal_contributors)$
+    <div class="author-contrib">
+        <sup>$if(equal_contributor_symbol)$$equal_contributor_symbol$$else$*$endif$</sup>These authors contributed equally to this work
+    </div>
+    $endif$
+</div>
 $if(abstract)$<p class="abstract" property="description">$abstract$</p>$endif$
 $if(doi)$<p><a href="https://doi.org/$doi$">doi: $doi$</a></p>$endif$
 
