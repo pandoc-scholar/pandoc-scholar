@@ -194,7 +194,7 @@ $for(header-includes)$
 $header-includes$
 $endfor$
 
-\usepackage{fontawesome}
+\usepackage[misc]{ifsym}
 $if(title)$
 \title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
 $endif$
@@ -209,7 +209,7 @@ $for(author)$
   $sep$,$endfor$]{%
   $author.name$%
   $if(author.correspondence)$$if(author.email)$%
-  \textsuperscript{{\LARGE\faEnvelope}\,}%
+  \textsuperscript{\Letter\,}%
   $endif$$endif$%
   $if(author.equal_contributor)$
   \textsuperscript{$if(equal_contributor_symbol)$$equal_contributor_symbol$$else$*$endif$\,}%
@@ -237,7 +237,7 @@ $endfor$
                   These authors contributed equally to this work.}
                 $endif$
                 $if(has_correspondence)$
-                \vskip 1em{\textsuperscript{\LARGE \faEnvelope}\,Correspondence:
+                \vskip 0.2em{\textsuperscript{\Letter}\,Correspondence:
                   $for(author)$$if(author.correspondence)$$if(author.email)$
                   $author.name$ <$author.email$>\\
                   $endif$$endif$$endfor$}%
