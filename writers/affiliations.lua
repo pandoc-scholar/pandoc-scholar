@@ -21,7 +21,7 @@ function Doc(body, meta, variables)
   meta.author, meta.institute =
     scholarlymeta.canonicalize_authors(meta.author, meta.institute)
   for i = 1, #meta.author do
-    if meta.author[i].contributed_equally then
+    if meta.author[i].equal_contributor then
       meta.has_equal_contributors = panlunatic.Str "yes"
     end
     if meta.author[i].correspondence and meta.author[i].email then

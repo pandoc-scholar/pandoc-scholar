@@ -194,6 +194,7 @@ $for(header-includes)$
 $header-includes$
 $endfor$
 
+\usepackage{fontawesome}
 $if(title)$
 \title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
 $endif$
@@ -203,12 +204,49 @@ $if(subtitle)$
 $endif$
 \usepackage{authblk}
 $for(author)$
-\author[$for(author.institute_indices)$$author.institute_indices$$sep$,$endfor$]{$author.name$}
+\author[$for(author.institute_indices)$%
+  $author.institute_indices$%
+  $sep$,$endfor$]{%
+  $author.name$%
+  $if(author.correspondence)$$if(author.email)$%
+  \textsuperscript{{\LARGE\faEnvelope}\,}%
+  $endif$$endif$%
+  $if(author.equal_contributor)$
+  \textsuperscript{$if(equal_contributor_symbol)$$equal_contributor_symbol$$else$*$endif$\,}%
+  $endif$%
+}
 $endfor$
 $for(institute)$
 \affil[$institute.index$]{$institute.name$}
 $endfor$
 \date{$date$}
+
+\makeatletter
+\def\@maketitle{%
+  \newpage \null \vskip 2em
+  \begin {center}%
+    \let \footnote \thanks
+         {\LARGE \@title \par}%
+         \vskip 1.5em%
+                {\large \lineskip .5em%
+                  \begin {tabular}[t]{c}%
+                    \@author
+                  \end {tabular}\par}%
+                $if(has_equal_contributors)$
+                \vskip 0.5em{\textsuperscript{$if(equal_contributor_symbol)$$equal_contributor_symbol$$else$*$endif$}\,%
+                  These authors contributed equally to this work.}
+                $endif$
+                $if(has_correspondence)$
+                \vskip 1em{\textsuperscript{\LARGE \faEnvelope}\,Correspondence:
+                  $for(author)$$if(author.correspondence)$$if(author.email)$
+                  $author.name$ <$author.email$>\\
+                  $endif$$endif$$endfor$}%
+                %$endif$
+                \vskip 1em{\large \@date}%
+  \end {center}%
+  \par
+  \vskip 1.5em}
+\makeatother
 
 \begin{document}
 
