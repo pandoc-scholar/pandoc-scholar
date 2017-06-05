@@ -17,7 +17,7 @@ Computer Science.
 [license shield]: https://img.shields.io/github/license/pandoc-scholar/pandoc-scholar.svg
 [build status]:   https://img.shields.io/travis/pandoc-scholar/pandoc-scholar/master.svg
 [DOI]: https://zenodo.org/badge/82204858.svg
-[paper]: https://peerj.com/preprints/2648/
+[paper]: https://peerj.com/articles/cs-112/
 
 Prerequisites
 -------------
