@@ -45,6 +45,18 @@ p, ul, ol, table, dl {
   margin: 0 0 22px;
 }
 
+sub, sup {
+  font-size: 80%;
+}
+
+sub {
+  vertical-align: sub;
+}
+
+sup {
+  vertical-align: sup;
+}
+
 .author-list {
   margin:0 0 0px;
   font-weight: 700;
