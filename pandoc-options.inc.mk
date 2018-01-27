@@ -3,7 +3,7 @@
 
 TEMPLATE_FILE_LATEX   ?= $(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.latex
 TEMPLATE_FILE_HTML    ?= $(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.html
-TEMPLATE_FILE_JATS    ?= $(PANDOC_SCHOLAR_PATH)/jats/default.jats
+TEMPLATE_FILE_JATS    ?= $(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.jats
 
 TEMPLATE_STYLE_HTML   ?= $(PANDOC_SCHOLAR_PATH)/templates/styles/pandoc-scholar.css
 
