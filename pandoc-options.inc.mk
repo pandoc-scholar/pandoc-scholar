@@ -8,7 +8,7 @@ TEMPLATE_FILE_JATS    ?= $(PANDOC_SCHOLAR_PATH)/jats/default.jats
 TEMPLATE_STYLE_HTML   ?= $(PANDOC_SCHOLAR_PATH)/templates/styles/pandoc-scholar.css
 
 ## Pandoc options
-PANDOC_READER_OPTIONS ?= --smart
+PANDOC_READER_OPTIONS ?= -f markdown+smart
 
 ifndef PANDOC_WRITER_OPTIONS
 PANDOC_WRITER_OPTIONS  = --standalone
@@ -24,7 +24,7 @@ PANDOC_DOCX_OPTIONS   ?=
 PANDOC_HTML_OPTIONS   ?=
 PANDOC_EPUB_OPTIONS   ?=
 ifndef PANDOC_LATEX_OPTIONS
-PANDOC_LATEX_OPTIONS   = --latex-engine=xelatex
+PANDOC_LATEX_OPTIONS   = --pdf-engine=xelatex
 endif
 
 ifdef ODT_REFERENCE_FILE
