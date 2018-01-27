@@ -1,14 +1,15 @@
 sudo: false
-language: generic
+language: minimal
 
 env:
-  - PANDOC_VERSION=1.19.1-1
+  - PANDOC_VERSION=2.1.1-1
 
 addons:
   apt:
     packages:
       - texlive-xetex
       - texlive-latex-recommended
+      - texlive-fonts-recommended
       - texlive-latex-extra
       - texlive-fonts-extra
       - lmodern
@@ -22,7 +23,7 @@ before_install:
   - travis_retry curl --location --silent
       ${DOWNLOAD_URL}/${PANDOC_VERSION%-*}/pandoc-${PANDOC_VERSION}-amd64.deb
       -o /tmp/pandoc.deb
-  - ar p /tmp/pandoc.deb data.tar.gz | tar xvz --strip-components 2 -C $HOME/.local/
+  - ar p /tmp/pandoc.deb data.tar.xz | tar xvJ --strip-components 2 -C $HOME/.local/
   # Set path to include pandoc executable
   - PATH="${HOME}/.local/bin:$PATH"
 
