@@ -7,7 +7,7 @@ dist/pandoc-scholar: \
 		scholarly-metadata \
 		LICENSE README.md \
 		Makefile pandoc-options.inc.mk scholarly-metadata.inc.mk \
-		example jats templates writers
+		example templates writers
 	rm -rf $@
 	mkdir -p $@
 	cp -av $^ $@
