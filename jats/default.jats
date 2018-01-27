@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
+$if(xml-stylesheet)$
+<?xml-stylesheet type="text/xsl" href="$xml-stylesheet$"?>
+$endif$
 <!DOCTYPE article PUBLIC "-//NLM//DTD JATS (Z39.96) Journal Publishing DTD v1.0 20120330//EN"
                   "JATS-journalpublishing1.dtd">
 $if(article.type)$
@@ -192,5 +195,12 @@ $if(notes)$
 <notes>$notes$</notes>
 $endif$
 </front>
+<body>
 $body$
+</body>
+<back>
+$if(back)$
+$back$
+$endif$
+</back>
 </article>

@@ -84,7 +84,7 @@ $(OUTFILE_PREFIX).jats: \
 		$(ENRICHED_JSON_FILE) \
 		$(PANDOC_SCHOLAR_PATH)/scholarly-metadata \
 		$(TEMPLATE_FILE_JATS)
-	pandoc -t $(PANDOC_SCHOLAR_PATH)/jats/JATS.lua \
+	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_JATS_OPTIONS) \
 	       --output $@ $<
 
