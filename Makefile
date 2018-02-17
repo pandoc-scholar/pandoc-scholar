@@ -20,14 +20,14 @@ FLATTENED_JSON_FILE   ?= $(OUTFILE_PREFIX).flattened.json
 
 all: $(addprefix $(OUTFILE_PREFIX).,$(DEFAULT_EXTENSIONS))
 
-$(OUTFILE_PREFIX).enriched.json: $(ARTICLE_FILE) \
+$(ENRICHED_JSON_FILE): $(ARTICLE_FILE) \
 		$(PANDOC_SCHOLAR_PATH)/scholarly-metadata \
 		$(PANDOC_SCHOLAR_PATH)/writers/affiliations.lua
 	pandoc $(PANDOC_READER_OPTIONS) \
 	       -t $(PANDOC_SCHOLAR_PATH)/writers/affiliations.lua \
 	       --output $@ $<
 
-$(OUTFILE_PREFIX).flattened.json: $(ARTICLE_FILE) \
+$(FLATTENED_JSON_FILE): $(ARTICLE_FILE) \
 		$(PANDOC_SCHOLAR_PATH)/scholarly-metadata \
 		$(PANDOC_SCHOLAR_PATH)/writers/default.lua
 	pandoc $(PANDOC_READER_OPTIONS) \
