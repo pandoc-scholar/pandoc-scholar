@@ -30,8 +30,6 @@ function Doc(body, meta, variables)
   end
   if next(abstract) ~= nil then
     meta.abstract = abstract
-  else
-    meta.abstract = panlunatic.Str("Not available")
   end
   return panlunatic.Doc(body, meta, variables)
 end
