@@ -13,53 +13,55 @@ include $(PANDOC_SCHOLAR_PATH)/pandoc-options.inc.mk
 # Configuration (overwrite using Makefile.local.in if necessary)
 ARTICLE_FILE          ?= example/article.md
 OUTFILE_PREFIX        ?= outfile
-DEFAULT_EXTENSIONS    ?= latex pdf docx odt epub html jats
-ENRICHED_JSON_FILE    ?= $(OUTFILE_PREFIX).enriched.json
+DEFAULT_EXTENSIONS    ?= latex pdf docx odt epub html
+JSON_FILE             ?= $(OUTFILE_PREFIX).enriched.json
 FLATTENED_JSON_FILE   ?= $(OUTFILE_PREFIX).flattened.json
+LUA_FILTERS           ?= $(PANDOC_SCHOLAR_PATH)/lua-filters/cito/cito.lua \
+                         $(PANDOC_SCHOLAR_PATH)/lua-filters/scholarly-metadata/scholarly-metadata.lua
 
 
 all: $(addprefix $(OUTFILE_PREFIX).,$(DEFAULT_EXTENSIONS))
 
-$(ENRICHED_JSON_FILE): $(ARTICLE_FILE) \
-		$(PANDOC_SCHOLAR_PATH)/scholarly-metadata \
-		$(PANDOC_SCHOLAR_PATH)/writers/affiliations.lua
+$(JSON_FILE): $(ARTICLE_FILE) $(LUA_FILTERS)
 	pandoc $(PANDOC_READER_OPTIONS) \
-	       -t $(PANDOC_SCHOLAR_PATH)/writers/affiliations.lua \
-	       --output $@ $<
-
-$(FLATTENED_JSON_FILE): $(ARTICLE_FILE) \
-		$(PANDOC_SCHOLAR_PATH)/scholarly-metadata \
-		$(PANDOC_SCHOLAR_PATH)/writers/default.lua
-	pandoc $(PANDOC_READER_OPTIONS) \
-	       -t $(PANDOC_SCHOLAR_PATH)/writers/default.lua \
-	       --output $@ $<
+		     $(foreach filter, $(LUA_FILTERS), --lua-filter=$(filter)) \
+	       --to=json \
+	       --output=$@ $<
 
 $(OUTFILE_PREFIX).pdf $(OUTFILE_PREFIX).latex: \
-		$(ENRICHED_JSON_FILE) \
-		$(TEMPLATE_FILE_LATEX)
+		$(JSON_FILE) \
+		$(TEMPLATE_FILE_LATEX) \
+		$(PANDOC_SCHOLAR_PATH)/scholar-filters/template-helper.lua
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_LATEX_OPTIONS) \
+	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/scholar-filters/template-helper.lua \
 	       --output $@ $<
 
-$(OUTFILE_PREFIX).docx: $(FLATTENED_JSON_FILE) \
-		$(ODT_REFERENCE_FILE)
+$(OUTFILE_PREFIX).docx: $(JSON_FILE) \
+		$(ODT_REFERENCE_FILE) \
+		$(PANDOC_SCHOLAR_PATH)/lua-filters/author-info-blocks/author-info-blocks.lua
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_DOCX_OPTIONS) \
+	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/lua-filters/author-info-blocks/author-info-blocks.lua \
 	       --output $@ $<
 
-$(OUTFILE_PREFIX).odt: $(FLATTENED_JSON_FILE) \
-		$(ODT_REFERENCE_FILE)
+$(OUTFILE_PREFIX).odt: $(JSON_FILE) \
+		$(ODT_REFERENCE_FILE) \
+		$(PANDOC_SCHOLAR_PATH)/lua-filters/author-info-blocks/author-info-blocks.lua
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_ODT_OPTIONS) \
+	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/lua-filters/author-info-blocks/author-info-blocks.lua \
 	       --output $@ $<
 
-$(OUTFILE_PREFIX).epub: $(FLATTENED_JSON_FILE) \
-		$(TEMPLATE_FILE_EPUB)
+$(OUTFILE_PREFIX).epub: $(JSON_FILE) \
+		$(TEMPLATE_FILE_EPUB) \
+		$(PANDOC_SCHOLAR_PATH)/lua-filters/author-info-blocks/author-info-blocks.lua
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_EPUB_OPTIONS) \
+	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/lua-filters/author-info-blocks/author-info-blocks.lua \
 	       --output $@ $<
 
-$(OUTFILE_PREFIX).html: $(ENRICHED_JSON_FILE) \
+$(OUTFILE_PREFIX).html: $(JSON_FILE) \
 		$(TEMPLATE_FILE_HTML) \
 		$(TEMPLATE_STYLE_HTML)
 	pandoc $(PANDOC_WRITER_OPTIONS) \
