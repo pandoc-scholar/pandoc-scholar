@@ -8,7 +8,7 @@ TEMPLATE_FILE_JATS    ?= $(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.jats
 TEMPLATE_STYLE_HTML   ?= $(PANDOC_SCHOLAR_PATH)/templates/styles/pandoc-scholar.css
 
 ## Pandoc options
-PANDOC_READER_OPTIONS ?= -f markdown+smart
+PANDOC_READER_OPTIONS ?=
 
 ifndef PANDOC_WRITER_OPTIONS
 PANDOC_WRITER_OPTIONS  = --standalone
