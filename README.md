@@ -114,7 +114,7 @@ scholar.
 Most metadata should be specified in the YAML block at the top of the article.
 Author data and affiliations are taken from the *author* and *institute* field,
 respectively. Institutes can be given via user-defined abbreviations, saving
-unnecessary repetiontions while preserving readability.
+unnecessary repetitions while preserving readability.
 
 Example:
 
