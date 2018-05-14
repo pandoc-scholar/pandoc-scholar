@@ -10,14 +10,17 @@ export LUA_PATH
 -include local.mk
 include $(PANDOC_SCHOLAR_PATH)/pandoc-options.inc.mk
 
+LUA_FILTERS_PATH      ?= $(PANDOC_SCHOLAR_PATH)/lua-filters
+
 # Configuration (overwrite using Makefile.local.in if necessary)
 ARTICLE_FILE          ?= example/article.md
 OUTFILE_PREFIX        ?= outfile
 DEFAULT_EXTENSIONS    ?= latex pdf docx odt epub html
 JSON_FILE             ?= $(OUTFILE_PREFIX).enriched.json
 FLATTENED_JSON_FILE   ?= $(OUTFILE_PREFIX).flattened.json
-LUA_FILTERS           ?= $(PANDOC_SCHOLAR_PATH)/lua-filters/cito/cito.lua \
-                         $(PANDOC_SCHOLAR_PATH)/lua-filters/scholarly-metadata/scholarly-metadata.lua
+LUA_FILTERS           ?= $(LUA_FILTERS_PATH)/cito/cito.lua \
+                         $(LUA_FILTERS_PATH)/abstract-to-meta/abstract-to-meta.lua \
+                         $(LUA_FILTERS_PATH)/scholarly-metadata/scholarly-metadata.lua
 
 
 all: $(addprefix $(OUTFILE_PREFIX).,$(DEFAULT_EXTENSIONS))
@@ -39,26 +42,26 @@ $(OUTFILE_PREFIX).pdf $(OUTFILE_PREFIX).latex: \
 
 $(OUTFILE_PREFIX).docx: $(JSON_FILE) \
 		$(ODT_REFERENCE_FILE) \
-		$(PANDOC_SCHOLAR_PATH)/lua-filters/author-info-blocks/author-info-blocks.lua
+		$(LUA_FILTERS_PATH)/author-info-blocks/author-info-blocks.lua
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_DOCX_OPTIONS) \
-	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/lua-filters/author-info-blocks/author-info-blocks.lua \
+	       --lua-filter=$(LUA_FILTERS_PATH)/author-info-blocks/author-info-blocks.lua \
 	       --output $@ $<
 
 $(OUTFILE_PREFIX).odt: $(JSON_FILE) \
 		$(ODT_REFERENCE_FILE) \
-		$(PANDOC_SCHOLAR_PATH)/lua-filters/author-info-blocks/author-info-blocks.lua
+		$(LUA_FILTERS_PATH)/author-info-blocks/author-info-blocks.lua
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_ODT_OPTIONS) \
-	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/lua-filters/author-info-blocks/author-info-blocks.lua \
+	       --lua-filter=$(LUA_FILTERS_PATH)/author-info-blocks/author-info-blocks.lua \
 	       --output $@ $<
 
 $(OUTFILE_PREFIX).epub: $(JSON_FILE) \
 		$(TEMPLATE_FILE_EPUB) \
-		$(PANDOC_SCHOLAR_PATH)/lua-filters/author-info-blocks/author-info-blocks.lua
+		$(LUA_FILTERS_PATH)/author-info-blocks/author-info-blocks.lua
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_EPUB_OPTIONS) \
-	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/lua-filters/author-info-blocks/author-info-blocks.lua \
+	       --lua-filter=$(LUA_FILTERS_PATH)/author-info-blocks/author-info-blocks.lua \
 	       --output $@ $<
 
 $(OUTFILE_PREFIX).html: $(JSON_FILE) \
