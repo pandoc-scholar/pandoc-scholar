@@ -74,12 +74,15 @@ $(OUTFILE_PREFIX).html: $(JSON_FILE) \
 	       --mathjax \
 	       --output $@ $<
 
-$(OUTFILE_PREFIX).jsonld: $(ARTICLE_FILE) \
+
+$(OUTFILE_PREFIX).jsonld: $(JSON_FILE) \
 		$(BIBLIOGRAPHY_FILE) \
+		$(PANDOC_SCHOLAR_PATH)/scholar-filters/json-ld.lua \
 		$(PANDOC_SCHOLAR_PATH)/writers/jsonld.lua
-	pandoc -t $(PANDOC_SCHOLAR_PATH)/writers/jsonld.lua \
+	pandoc --to $(PANDOC_SCHOLAR_PATH)/writers/jsonld.lua \
 	       --metadata "bibliography:$(BIBLIOGRAPHY_FILE)" \
-	       --output $@ $<
+	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/scholar-filters/json-ld.lua \
+	       --output=$@ $<
 
 $(OUTFILE_PREFIX).txt: $(ARTICLE_FILE)
 	pandoc $(PANDOC_WRITER_OPTIONS) \
