@@ -3,9 +3,6 @@
 ## this variable to the correct value.
 PANDOC_SCHOLAR_PATH   ?= $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
-LUA_PATH              ?= $(PANDOC_SCHOLAR_PATH)/scholarly-metadata/?.lua;;
-export LUA_PATH
-
 # include local makefile to allow easy overwriting of variables
 -include local.mk
 include $(PANDOC_SCHOLAR_PATH)/pandoc-options.inc.mk
@@ -99,8 +96,6 @@ clean:
 
 .PHONY: all clean
 
-# Include project-setup helpers
-include $(PANDOC_SCHOLAR_PATH)/scholarly-metadata.inc.mk
 # Include archive-generating targets. This makefile is not included in the
 # distributed archives
 -include archives.inc.mk

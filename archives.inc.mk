@@ -4,11 +4,10 @@
 archives: dist/pandoc-scholar.zip dist/pandoc-scholar.tar.gz
 
 dist/pandoc-scholar: \
-		scholarly-metadata \
 		lua-filters \
 		scholar-filters \
 		LICENSE README.md \
-		Makefile pandoc-options.inc.mk scholarly-metadata.inc.mk \
+		Makefile pandoc-options.inc.mk \
 		example templates writers
 	rm -rf $@
 	mkdir -p $@

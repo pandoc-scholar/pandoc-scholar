@@ -1,9 +1,5 @@
 # Generated files
 /outfile.*
 
-# panmeta files
-/scholarly-metadata
-*.tar.gz
-
 # Release files
 /dist
