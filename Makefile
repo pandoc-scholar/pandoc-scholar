@@ -74,7 +74,6 @@ $(OUTFILE_PREFIX).html: $(JSON_FILE) \
 	       --mathjax \
 	       --output $@ $<
 
-
 $(OUTFILE_PREFIX).jsonld: $(JSON_FILE) \
 		$(BIBLIOGRAPHY_FILE) \
 		$(PANDOC_SCHOLAR_PATH)/scholar-filters/json-ld.lua \
@@ -88,10 +87,9 @@ $(OUTFILE_PREFIX).txt: $(ARTICLE_FILE)
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       --output $@ $<
 
+## Advanced JATS support is temporarily disabled.
 $(OUTFILE_PREFIX).jats: \
-		$(ENRICHED_JSON_FILE) \
-		$(PANDOC_SCHOLAR_PATH)/scholarly-metadata \
-		$(TEMPLATE_FILE_JATS)
+		$(JSON_FILE) \
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_JATS_OPTIONS) \
 	       --output $@ $<
