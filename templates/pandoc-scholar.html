@@ -32,7 +32,14 @@ $for(css)$
   <link rel="stylesheet" href="$css$">
 $endfor$
 $if(math)$
+$if(mathjax)$
+$-- MathJax is handled specially.  We need to add the data-external attribute
+$-- so it doesn't get inlined (and thus broken) by the --self-contained option.
+$-- (2.7.2 is the default MathJax version as of Pandoc 2.2.1.)
+  <script data-external="1" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_CHTML-full"></script>
+$else$
   $math$
+$endif$
 $endif$
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>

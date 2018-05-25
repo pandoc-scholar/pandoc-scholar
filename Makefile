@@ -69,6 +69,7 @@ $(OUTFILE_PREFIX).html: $(JSON_FILE) \
 	       $(PANDOC_HTML_OPTIONS) \
 	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/scholar-filters/template-helper.lua \
 	       --css=$(TEMPLATE_STYLE_HTML) \
+	       --self-contained \
 	       --mathjax \
 	       --output $@ $<
 
