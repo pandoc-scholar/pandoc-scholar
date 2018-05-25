@@ -63,9 +63,11 @@ $(OUTFILE_PREFIX).epub: $(JSON_FILE) \
 
 $(OUTFILE_PREFIX).html: $(JSON_FILE) \
 		$(TEMPLATE_FILE_HTML) \
-		$(TEMPLATE_STYLE_HTML)
+		$(TEMPLATE_STYLE_HTML) \
+		$(PANDOC_SCHOLAR_PATH)/scholar-filters/template-helper.lua
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_HTML_OPTIONS) \
+	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/scholar-filters/template-helper.lua \
 	       --css=$(TEMPLATE_STYLE_HTML) \
 	       -M include-headers='<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>' \
 	       --mathjax \
