@@ -195,11 +195,13 @@ Example:
 License
 -------
 
-Copyright © 2016–2017 Albert Krewinkel and Robert Winkler except for the
+Copyright © 2016–2018 Albert Krewinkel and Robert Winkler except for the
 following components:
 
 - HTML template: © 2016 Andrew G. York and Diana Mounter
-- JATS support: © 2015–2016 Martin Fenner
+- dkjson: © 2010-2013 David Heiko Kolf
+- lua-filters: © 2017-2018 John MacFarlane, Albert Krewinkel, Jesse Rosenthal,
+  and Greg Tucker-Kellogg
 
 This program is free software; you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
