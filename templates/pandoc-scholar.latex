@@ -194,7 +194,6 @@ $for(header-includes)$
 $header-includes$
 $endfor$
 
-\usepackage[misc]{ifsym}
 $if(title)$
 \title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
 $endif$
@@ -209,10 +208,10 @@ $for(author)$
   $sep$,$endfor$]{%
   $author.name$%
   $if(author.correspondence)$$if(author.email)$%
-  \textsuperscript{\Letter\,}%
-  $endif$$endif$%
+  \textsuperscript{*\,}%
+  %$endif$$endif$%
   $if(author.equal_contributor)$
-  \textsuperscript{$if(equal_contributor_symbol)$$equal_contributor_symbol$$else$*$endif$\,}%
+  \textsuperscript{$if(equal_contributor_symbol)$$equal_contributor_symbol$$else$\textdagger$endif$\,}%
   $endif$%
 }
 $endfor$
@@ -233,11 +232,11 @@ $endfor$
                     \@author
                   \end {tabular}\par}%
                 $if(has_equal_contributors)$
-                \vskip 0.5em{\textsuperscript{$if(equal_contributor_symbol)$$equal_contributor_symbol$$else$*$endif$}\,%
+                \vskip 0.5em{\textsuperscript{$if(equal_contributor_symbol)$$equal_contributor_symbol$$else$\textdagger$endif$}\,%
                   These authors contributed equally to this work.}
                 $endif$
                 $if(has_correspondence)$
-                \vskip 0.2em{\textsuperscript{\Letter}\,Correspondence:
+                \vskip 0.2em{\textsuperscript{*}\,Correspondence:
                   $for(author)$$if(author.correspondence)$$if(author.email)$
                   $author.name$ <$author.email$>\\
                   $endif$$endif$$endfor$}%
