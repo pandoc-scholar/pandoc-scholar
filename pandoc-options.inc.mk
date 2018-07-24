@@ -45,8 +45,3 @@ endif
 ifdef TEMPLATE_FILE_JATS
 PANDOC_JATS_OPTIONS   += --template=$(TEMPLATE_FILE_JATS)
 endif
-
-# Panlunatic uses this variable when deciding which JSON version should be
-# emitted.
-PANDOC_VERSION        ?= $(shell pandoc -v | sed -ne 's/^pandoc //gp')
-export PANDOC_VERSION
