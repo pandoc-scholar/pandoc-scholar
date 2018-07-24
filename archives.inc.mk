@@ -24,6 +24,6 @@ dist/pandoc-scholar.zip: dist/pandoc-scholar
 clean-archives:
 	rm -rf dist
 
-dist-clean: clean-setup clean-archives
+dist-clean: clean-archives
 
 .PHONY: archives clean-archives dist-clean
