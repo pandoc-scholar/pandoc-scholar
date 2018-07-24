@@ -6,18 +6,52 @@ Pandoc Scholar
 [![license shield]](./LICENSE)
 [![build status]](https://travis-ci.org/pandoc-scholar/pandoc-scholar)
 
-Create beautiful, semantically enriched articles with pandoc. This package
-provides utilities to make publishing of scientific articles as simple and
-pleasant as possible. It simplifies setting authors' metadata in YAML blocks,
-allows to add semantic annotation to citations, and only requires the programs
-pandoc and make. Pandoc Scholar is described in the [paper] published in PeerJ
-Computer Science.
+Create beautiful, semantically enriched articles with pandoc. This
+package provides utilities to make publishing of scientific articles as
+simple and pleasant as possible. It simplifies setting authors' metadata
+in YAML blocks, allows to add semantic annotation to citations, and only
+requires the programs pandoc and make.
 
 [release shield]: https://img.shields.io/github/release/pandoc-scholar/pandoc-scholar.svg
 [license shield]: https://img.shields.io/github/license/pandoc-scholar/pandoc-scholar.svg
 [build status]:   https://img.shields.io/travis/pandoc-scholar/pandoc-scholar/master.svg
 [DOI]: https://zenodo.org/badge/82204858.svg
 [paper]: https://peerj.com/articles/cs-112/
+
+Overview
+--------
+
+Plain pandoc is already excellent at document conversion, but it lacks
+in metadata handling. Pandoc Scholar offers simple ways to include
+metadata on authors, affiliations, contact details, and citations. The
+data is included into the final output as document headers. Additionally
+all entries can be exported as [JSON-LD], a standardized format for the
+semantic web.
+
+The background leading to the development of Pandoc Scholar is described
+in the [paper] published in PeerJ Computer Science.
+
+Note that since version 2.0, most of the functionality of Pandoc Scholar
+is now provided via [pandoc Lua filters]. If you prefer to mix-and-match
+selected functionalities provided by pandoc-scholar, you can now use the
+respective Lua filters directly. Integration with tools like RMarkdown
+is possible this way.
+
+[JSON-LD]: https://en.wikipedia.org/wiki/JSON-LD
+[pandoc Lua filters]: https://github.com/pandoc/lua-filters
+
+### Demo
+
+An example document plus bibliography is provided in the *example*
+folder. Running `make` in the project's root folder will process the
+example article, generating output like below:
+
+![example article screenshot](https://pandoc-scholar.github.io/example/header.png)
+
+- [pdf](https://pandoc-scholar.github.io/example/example.pdf)
+- [docx](https://pandoc-scholar.github.io/example/example.docx)
+- [epub](https://pandoc-scholar.github.io/example/example.epub)
+
 
 Prerequisites
 -------------
