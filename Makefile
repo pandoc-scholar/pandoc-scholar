@@ -87,8 +87,7 @@ $(OUTFILE_PREFIX).txt: $(ARTICLE_FILE)
 	       --output $@ $<
 
 ## Advanced JATS support is temporarily disabled.
-$(OUTFILE_PREFIX).jats: \
-		$(JSON_FILE) \
+$(OUTFILE_PREFIX).jats: $(JSON_FILE)
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_JATS_OPTIONS) \
 	       --output $@ $<
