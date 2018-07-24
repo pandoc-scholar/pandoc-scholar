@@ -11,7 +11,15 @@ package.path =  SCRIPT_DIR .. '/?.lua;' .. package.path
 
 local json = require "dkjson"
 local List = require 'pandoc.List'
-local stringify = pandoc.utils.stringify
+
+local function stringify(x)
+  if x == nil then
+    return nil
+  elseif type(x) == 'string' then
+    return x
+  end
+  return pandoc.utils.stringify(x)
+end
 
 local function Organizations(orgs)
   local orgs_json = {}
@@ -192,14 +200,14 @@ end
 
 local function institute_resolver (institutes)
   return function (inst_idx)
-    return institutes[tonumber(pandoc.utils.stringify(inst_idx))]
+    return institutes[tonumber(stringify(inst_idx))]
   end
 end
 
 function Meta (meta)
   local function clone (obj)
     local result = {}
-    for k, v in pairs(meta) do result[k] = v end
+    for k, v in pairs(obj) do result[k] = v end
     return result
   end
   local metadata = clone(meta)
