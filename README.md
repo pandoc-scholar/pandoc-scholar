@@ -212,21 +212,32 @@ ontology, allowing authors to specify important meta-information on the citation
 directly while writing the text. The property is simply prepended to the
 citation key, separated by a colon: `@<property>:citationKey`.
 
-The following table contains all supported keywords and the respective CiTO
-properties. Authors are free to use the short-form, the full-length property, or
-any of the alternatives listed below.
+The following table contains all supported keywords and the respective
+CiTO properties. Authors are free to use the short-form, the full-length
+property, or any of the alternatives listed below (i.e., all word in a
+row denote the property and have the same effect).
 
-CiTO property                 | Keyword      | alternatives
------------------------------ | ------------ | ---------------------
-agrees\_with                  | agrees\_with | agree\_with
-cites                         |              |
-cites\_as\_authority          | authority    | as\_authority
-cites\_as\_evidence           | evidence     | as\_evidence
-cites\_as\_metadata\_document | metadata     | as\_metadata_document
-includes\_excerpt\_from       | excerpt      | excerpt\_from
-includes\_quotation\_from     | quotation    | quotation\_from
-obtaines\_background\_from    | background   | background\_from
-uses\_method\_in              | method       | method\_in
+CiTO property                  | Keyword             | alternatives
+------------------------------ | ------------------- | ---------------------
+agrees\_with                   | agrees\_with        | agree\_with
+citation                       |                     |
+cites                          |                     |
+cites\_as\_authority           | authority           | as\_authority
+cites\_as\_data\_source        | data\_source        | as\_data_source
+cites\_as\_evidence            | evidence            | as\_evidence
+cites\_as\_metadata\_document  | metadata            | as\_metadata_document
+cites\_as\_recommended_reading | recommended_reading | as\_recommended\_reading
+disputes                       |                     |
+documents                      |                     |
+extends                        |                     |
+includes\_excerpt\_from        | excerpt             | excerpt\_from
+includes\_quotation\_from      | quotation           | quotation\_from
+obtaines\_background\_from     | background          | background\_from
+refutes                        |                     |
+replies\_to                    |                     |
+updates                        |                     |
+uses\_data\_from               | data\_from          | data
+uses\_method\_in               | method              | method\_in
 
 Example:
 
