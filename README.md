@@ -69,13 +69,16 @@ suggestions for LaTeX packages, which we use for PDF generation.
 Installation
 ------------
 
-Archives containing all required files are provided for each release. Use the
-*release* button above and download a `pandoc-scholar` archive; both archive
-files, `.zip` and `.tar.gz`, contain the same files, choose the one most
-convenient to you.
+Archives containing all required files are provided for each release.
+Use the *release* button above (or directly go to the [latest release])
+and download a `pandoc-scholar` archive; both archive files, `.zip` and
+`.tar.gz`, contain the same files. Choose the filetype that is the
+easiest to unpack on you system.
 
-A `pandoc-scholar` folder will be created on unpacking. The folder contains all
-required scripts and templates.
+A `pandoc-scholar` folder will be created on unpacking. The folder
+contains all required scripts and templates.
+
+[latest release]: https://github.com/pandoc-scholar/pandoc-scholar/releases/latest
 
 
 Usage
