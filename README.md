@@ -60,8 +60,8 @@ metadata in [JSON-LD] format.
 Prerequisites
 -------------
 
-This package builds on [pandoc](http://pandoc.org/), the universal document
-converter. See the pandoc website for
+This package builds on [pandoc](http://pandoc.org/), the universal
+document converter, version 2.1 or later. See the pandoc website for
 [installation instructions](http://pandoc.org/installing.html) and
 suggestions for LaTeX packages, which we use for PDF generation.
 
