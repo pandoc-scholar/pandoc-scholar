@@ -48,9 +48,13 @@ example article, generating output like below:
 
 ![example article screenshot](https://pandoc-scholar.github.io/example/header.png)
 
-- [pdf](https://pandoc-scholar.github.io/example/example.pdf)
-- [docx](https://pandoc-scholar.github.io/example/example.docx)
-- [epub](https://pandoc-scholar.github.io/example/example.epub)
+Get the full output as [pdf], [docx], or [epub], or take a look at the
+metadata in [JSON-LD] format.
+
+[pdf]: https://pandoc-scholar.github.io/example/example.pdf
+[docx]: https://pandoc-scholar.github.io/example/example.docx
+[epub]: https://pandoc-scholar.github.io/example/example.epub
+[JSON-LD]: https://pandoc-scholar.github.io/example/example.jsonld
 
 
 Prerequisites
