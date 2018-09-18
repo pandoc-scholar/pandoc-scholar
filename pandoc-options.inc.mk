@@ -28,7 +28,7 @@ PANDOC_LATEX_OPTIONS   = --pdf-engine=xelatex
 endif
 
 ifdef ODT_REFERENCE_FILE
-PANDOC_ODT_OPTIONS    += --reference-odt=$(ODT_REFERENCE_FILE)
+PANDOC_ODT_OPTIONS    += --reference-doc=$(ODT_REFERENCE_FILE)
 endif
 ifdef DOCX_REFERENCE_FILE
 PANDOC_DOCX_OPTIONS   += --reference-doc=$(DOCX_REFERENCE_FILE)
