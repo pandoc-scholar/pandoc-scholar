@@ -25,7 +25,7 @@ local default_marks = {
     and {pandoc.RawInline('latex', '*')}
     or {pandoc.Str '✉'},
   equal_contributor = FORMAT == 'latex'
-    and {pandoc.RawInline('latex', '\\dagger{}')}
+    and {pandoc.RawInline('latex', '$\\dagger{}$')}
     or {pandoc.Str '*'},
 }
 
@@ -35,7 +35,9 @@ local function intercalate(lists, elem)
     result:extend(lists[i])
     result:extend(elem)
   end
-  result:extend(lists[#lists])
+  if #lists > 0 then
+    result:extend(lists[#lists])
+  end
   return result
 end
 
@@ -51,8 +53,14 @@ local function author_inline_generator (get_mark)
     if author.equal_contributor then
       author_marks[#author_marks + 1] = get_mark 'equal_contributor'
     end
+    local idx_str
     for _, idx in ipairs(author.institute) do
-      author_marks[#author_marks + 1] = {pandoc.Str(idx)}
+      if type(idx) ~= 'table' then
+        idx_str = tostring(idx)
+      else
+        idx_str = stringify(idx)
+      end
+      author_marks[#author_marks + 1] = {pandoc.Str(idx_str)}
     end
     if is_corresponding_author(author) then
       author_marks[#author_marks + 1] = get_mark 'corresponding_author'
@@ -151,10 +159,13 @@ return {
       body:extend(create_correspondence_blocks(doc.meta.author, mark) or {})
       body:extend(doc.blocks)
 
-      -- Overwrite and unset some metadata values
-      meta.author = pandoc.MetaInlines(
-        create_authors_inlines(doc.meta.author, mark)
-      )
+      -- Overwrite authors with formatted values. We use a single, formatted
+      -- string for most formats. LaTeX output, however, looks nicer if we
+      -- provide a authors as a list.
+      meta.author = FORMAT:match 'latex'
+        and pandoc.MetaList(doc.meta.author):map(author_inline_generator(mark))
+        or pandoc.MetaInlines(create_authors_inlines(doc.meta.author, mark))
+      -- Institute info is now baked into the affiliations block.
       meta.institute = nil
 
       return pandoc.Pandoc(body, meta)
