@@ -82,8 +82,7 @@ $endfor$
 </p>
 <div class="author_affiliations">
 $for(institute)$
-  <div class="affiliation"><sup>$institute.index$</sup>$institute.name$
-  $if(institute.address)$, $institute.address$$endif$
+  <div class="affiliation"><sup>$institute.index$</sup>$institute.name$$if(institute.address)$, $institute.address$$endif$
   </div>
 $endfor$
 </div>
