@@ -1,6 +1,19 @@
 ChangeLog
 =========
 
+v2.1.0
+------
+
+Released 2019-01-16.
+
+### Templates
+
+- Removed a newline in the HTML template which caused an extra
+  space be inserted before institute addresses (Benjamin Lee).
+
+- Include subtitle in PDF output (solution taken from pandoc,
+  courtesy of Andrew Dunning).
+
 v2.0.1
 ------
 
