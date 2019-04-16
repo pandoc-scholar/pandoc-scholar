@@ -1,7 +1,7 @@
 --[[
 affiliation-blocks – generate title components
 
-Copyright © 2017–2018 Albert Krewinkel
+Copyright © 2017–2019 Albert Krewinkel
 
 Permission to use, copy, modify, and/or distribute this software for any purpose
 with or without fee is hereby granted, provided that the above copyright notice
@@ -141,7 +141,9 @@ local function create_authors_inlines(authors, mark)
   local last_author = inlines[#inlines]
   inlines[#inlines] = nil
   local result = intercalate(inlines, {pandoc.Str ',', pandoc.Space()})
-  result:extend(List:new{pandoc.Str ","} .. and_str)
+  if #authors > 1 then
+    result:extend(List:new{pandoc.Str ","} .. and_str)
+  end
   result:extend(last_author)
   return result
 end

@@ -13,18 +13,24 @@ local function is_wordprocessing (format)
 end
 
 header_track_changes = [[
-\usepackage[markup=underlined,authormarkup=none]{changes}
+
+\makeatletter
+\PassOptionsToPackage{textsize=scriptsize}{todonotes}
+\PassOptionsToPackage{markup=underlined,authormarkup=none,commentmarkup=todo}{changes}
+\usepackage{changes}
+\@ifpackagelater{changes}{2018/11/03}{%
+}{%
+  \usepackage{todonotes}
+  \setremarkmarkup{\todo[color=Changes@Color#1!20]{\sffamily\textbf{#1:}~#2}}
+}%
+\makeatother
 \definecolor{auth1}{HTML}{4477AA}
 \definecolor{auth2}{HTML}{117733}
 \definecolor{auth3}{HTML}{999933}
 \definecolor{auth4}{HTML}{CC6677}
 \definecolor{auth5}{HTML}{AA4499}
 \definecolor{auth6}{HTML}{332288}
-\usepackage[textsize=scriptsize]{todonotes}
 \setlength{\marginparwidth}{3cm}
-\makeatletter
-\setremarkmarkup{\todo[color=Changes@Color#1!20]{\sffamily\textbf{#1:}~#2}}
-\makeatother
 \newcommand{\note}[2][]{\added[#1,remark={#2}]{}}
 \newcommand\hlnotesingle{%
   \bgroup
