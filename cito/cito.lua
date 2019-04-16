@@ -1,4 +1,4 @@
--- Copyright © 2017–2018 Albert Krewinkel, Robert Winkler
+-- Copyright © 2017–2019 Albert Krewinkel, Robert Winkler
 --
 -- This library is free software; you can redistribute it and/or modify it
 -- under the terms of the MIT license. See LICENSE for details.
@@ -17,6 +17,8 @@ local properties_and_aliases = {
     'authority'
   },
   cites_as_data_source = {
+    "as_data_source",
+    "data_source"
   },
   cites_as_evidence = {
     'as_evidence',
