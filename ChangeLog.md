@@ -1,6 +1,16 @@
 ChangeLog
 =========
 
+v2.1.1
+------
+
+Released 2019-04-16
+
+### Lua filters
+
+- Fix a bug which caused separators to be inserted even for
+  single authors. (#33)
+
 v2.1.0
 ------
 
