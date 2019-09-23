@@ -93,7 +93,12 @@ $(OUTFILE_PREFIX).jats: $(JSON_FILE)
 	       --output $@ $<
 
 clean:
-	rm -f $(OUTFILE_PREFIX).*
+	@# Make sure we don't accidentally delete any other files, e.g. if the ARTICLE_FILE happens 
+	@# to begin with OUTFILE_PREFIX let's be sure not to delete it. 
+	for ext in jats txt jsonld html epub odt docx pdf latex enriched.json flattened.json; do\
+		if [ -f $(OUTFILE_PREFIX).$$ext ]; then rm -f $(OUTFILE_PREFIX).$$ext; fi;\
+	done
+	@#rm -f $(OUTFILE_PREFIX).*
 
 .PHONY: all clean
 
