@@ -87,9 +87,16 @@ $(OUTFILE_PREFIX).txt: $(ARTICLE_FILE)
 	       --output $@ $<
 
 ## Advanced JATS support is temporarily disabled.
-$(OUTFILE_PREFIX).jats: $(JSON_FILE)
+$(OUTFILE_PREFIX).jats: $(JSON_FILE) \
+		$(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.jats \
+		$(PANDOC_SCHOLAR_PATH)/scholar-filters/template-helper.lua
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_JATS_OPTIONS) \
+	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/scholar-filters/template-helper.lua \
+	       --template=$(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.jats \
+	       --self-contained \
+	       --section-divs \
+	       --to=jats \
 	       --output $@ $<
 
 clean:
