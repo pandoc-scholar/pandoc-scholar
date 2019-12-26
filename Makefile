@@ -13,6 +13,7 @@ LUA_FILTERS_PATH      ?= $(PANDOC_SCHOLAR_PATH)/lua-filters
 ARTICLE_FILE          ?= example/article.md
 OUTFILE_PREFIX        ?= outfile
 DEFAULT_EXTENSIONS    ?= latex pdf docx odt epub html
+ADDITIONAL_EXTENSIONS ?= jats jsonld txt
 JSON_FILE             ?= $(OUTFILE_PREFIX).enriched.json
 FLATTENED_JSON_FILE   ?= $(OUTFILE_PREFIX).flattened.json
 LUA_FILTERS           ?= $(LUA_FILTERS_PATH)/cito/cito.lua \
@@ -100,12 +101,13 @@ $(OUTFILE_PREFIX).jats: $(JSON_FILE) \
 	       --output $@ $<
 
 clean:
-	@# Make sure we don't accidentally delete any other files, e.g. if the ARTICLE_FILE happens 
-	@# to begin with OUTFILE_PREFIX let's be sure not to delete it. 
-	for ext in jats txt jsonld html epub odt docx pdf latex enriched.json flattened.json; do\
-		if [ -f $(OUTFILE_PREFIX).$$ext ]; then rm -f $(OUTFILE_PREFIX).$$ext; fi;\
+	@# Explicitly iterate over known extensions instead of using a wildcard.
+	@# This lets us avoid to accidentally delete any other files, e.g. if the
+	@# ARTICLE_FILE happens to begin with OUTFILE_PREFIX.
+	for ext in $(DEFAULT_EXTENSIONS) $(ADDITIONAL_EXTENSIONS); do\
+		rm -f $(OUTFILE_PREFIX).$$ext;\
 	done
-	@#rm -f $(OUTFILE_PREFIX).*
+	rm -f $(JSON_FILE) $(FLATTENED_JSON_FILE)
 
 .PHONY: all clean
 
