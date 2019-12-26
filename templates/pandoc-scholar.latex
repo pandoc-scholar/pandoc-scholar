@@ -99,7 +99,7 @@ $endfor$
 \fi
 $endif$
 $if(natbib)$
-\usepackage{natbib}
+\usepackage[$natbiboptions$]{natbib}
 \bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
 $endif$
 $if(biblatex)$
@@ -107,6 +107,14 @@ $if(biblatex)$
 $for(bibliography)$
 \addbibresource{$bibliography$}
 $endfor$
+$endif$
+$if(csl-refs)$
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newenvironment{cslreferences}%
+  {$if(csl-hanging-indent)$\setlength{\parindent}{0pt}%
+  \everypar{\setlength{\hangindent}{\cslhangindent}}\ignorespaces$endif$}%
+  {\par}
 $endif$
 $if(listings)$
 \usepackage{listings}
@@ -288,20 +296,34 @@ $body$
 $if(natbib)$
 $if(bibliography)$
 $if(biblio-title)$
-$if(book-class)$
+$if(has-chapters)$
 \renewcommand\bibname{$biblio-title$}
 $else$
 \renewcommand\refname{$biblio-title$}
 $endif$
 $endif$
-\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+$if(beamer)$
+\begin{frame}[allowframebreaks]{$biblio-title$}
+  \bibliographytrue
+$endif$
+  \bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+$if(beamer)$
+\end{frame}
+$endif$
 
 $endif$
 $endif$
 $if(biblatex)$
+$if(beamer)$
+\begin{frame}[allowframebreaks]{$biblio-title$}
+  \bibliographytrue
+  \printbibliography[heading=none]
+\end{frame}
+$else$
 \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
-
 $endif$
+$endif$
+
 $for(include-after)$
 $include-after$
 
