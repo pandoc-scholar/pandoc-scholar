@@ -99,7 +99,6 @@ $(OUTFILE_PREFIX).jats $(OUTFILE_PREFIX).xml: $(ARTICLE_FILE) \
 	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/scholar-filters/template-helper.lua \
 	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/scholar-filters/jats-cite.lua \
 	       $(PANDOC_WRITER_OPTIONS) \
-	       --template=$(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.jats \
 	       --to=jats \
 	       --output $@ $<
 
