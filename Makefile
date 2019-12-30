@@ -13,15 +13,17 @@ LUA_FILTERS_PATH      ?= $(PANDOC_SCHOLAR_PATH)/lua-filters
 ARTICLE_FILE          ?= example/article.md
 OUTFILE_PREFIX        ?= outfile
 DEFAULT_EXTENSIONS    ?= latex pdf docx odt epub html
-ADDITIONAL_EXTENSIONS ?= jats jsonld txt
+ADDITIONAL_EXTENSIONS ?= xml jats jsonld txt
 JSON_FILE             ?= $(OUTFILE_PREFIX).enriched.json
 FLATTENED_JSON_FILE   ?= $(OUTFILE_PREFIX).flattened.json
 LUA_FILTERS           ?= $(LUA_FILTERS_PATH)/cito/cito.lua \
                          $(LUA_FILTERS_PATH)/abstract-to-meta/abstract-to-meta.lua \
                          $(LUA_FILTERS_PATH)/scholarly-metadata/scholarly-metadata.lua
 
+default: $(addprefix $(OUTFILE_PREFIX).,$(DEFAULT_EXTENSIONS))
 
-all: $(addprefix $(OUTFILE_PREFIX).,$(DEFAULT_EXTENSIONS))
+all: $(addprefix $(OUTFILE_PREFIX).,$(DEFAULT_EXTENSIONS)) \
+     $(addprefix $(OUTFILE_PREFIX).,$(ADDITIONAL_EXTENSIONS))
 
 $(JSON_FILE): $(ARTICLE_FILE) $(LUA_FILTERS)
 	pandoc $(PANDOC_READER_OPTIONS) \
