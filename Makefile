@@ -89,16 +89,17 @@ $(OUTFILE_PREFIX).txt: $(ARTICLE_FILE)
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       --output $@ $<
 
-## Advanced JATS support is temporarily disabled.
-$(OUTFILE_PREFIX).jats: $(JSON_FILE) \
+## Writer options come later, as corrections of citations must happen before
+## pandoc-citeproc is called.
+$(OUTFILE_PREFIX).jats $(OUTFILE_PREFIX).xml: $(ARTICLE_FILE) \
 		$(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.jats \
 		$(PANDOC_SCHOLAR_PATH)/scholar-filters/template-helper.lua
-	pandoc $(PANDOC_WRITER_OPTIONS) \
-	       $(PANDOC_JATS_OPTIONS) \
+	pandoc $(PANDOC_JATS_OPTIONS) \
+		     $(foreach filter, $(LUA_FILTERS), --lua-filter=$(filter)) \
 	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/scholar-filters/template-helper.lua \
+	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/scholar-filters/jats-cite.lua \
+	       $(PANDOC_WRITER_OPTIONS) \
 	       --template=$(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.jats \
-	       --self-contained \
-	       --section-divs \
 	       --to=jats \
 	       --output $@ $<
 
