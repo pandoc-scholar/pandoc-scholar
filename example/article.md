@@ -28,6 +28,8 @@ institute:
   - acme:
       name: Acme Corporation
 bibliography: example/bibliography.bib
+csl: example/chicago-author-date.csl
+link-citations: true
 project:
   title: Pandoc Scholar Example
   zip-url: https://github.com/pandoc-scholar/pandoc-scholar/releases
