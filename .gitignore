@@ -3,3 +3,6 @@
 
 # Release files
 /dist
+
+# pandoc data file
+csl/jats.csl

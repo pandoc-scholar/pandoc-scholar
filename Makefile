@@ -89,16 +89,23 @@ $(OUTFILE_PREFIX).txt: $(ARTICLE_FILE)
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       --output $@ $<
 
-## Writer options come later, as corrections of citations must happen before
-## pandoc-citeproc is called.
+
+csl/jats.csl:
+	pandoc --print-default-data-file=jats.csl > $@
+
+## Writer options are omitted -- we need full control to get
+## acceptable JATS output.
 $(OUTFILE_PREFIX).jats $(OUTFILE_PREFIX).xml: $(ARTICLE_FILE) \
 		$(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.jats \
-		$(PANDOC_SCHOLAR_PATH)/scholar-filters/template-helper.lua
+		$(PANDOC_SCHOLAR_PATH)/scholar-filters/jats-fixes.lua \
+		$(PANDOC_SCHOLAR_PATH)/scholar-filters/template-helper.lua \
+		csl/jats.csl
 	pandoc $(PANDOC_JATS_OPTIONS) \
 		     $(foreach filter, $(LUA_FILTERS), --lua-filter=$(filter)) \
 	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/scholar-filters/template-helper.lua \
-	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/scholar-filters/jats-cite.lua \
-	       $(PANDOC_WRITER_OPTIONS) \
+	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/scholar-filters/jats-fixes.lua \
+	       --metadata=jats_csl=$(PANDOC_SCHOLAR_PATH)/csl/jats.csl \
+	       --csl=$(PANDOC_SCHOLAR_PATH)/csl/chicago-author-date.csl \
 	       --to=jats \
 	       --output $@ $<
 
