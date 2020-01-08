@@ -28,7 +28,7 @@ institute:
   - acme:
       name: Acme Corporation
 bibliography: example/bibliography.bib
-csl: example/chicago-author-date.csl
+csl: csl/chicago-author-date.csl
 link-citations: true
 project:
   title: Pandoc Scholar Example
