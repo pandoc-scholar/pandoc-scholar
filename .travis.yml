@@ -2,7 +2,7 @@ sudo: false
 language: minimal
 
 env:
-  - PANDOC_VERSION=2.1.1-1
+  - PANDOC_VERSION=2.9.1.1-1
 
 addons:
   apt:
