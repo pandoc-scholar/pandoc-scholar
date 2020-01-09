@@ -247,12 +247,12 @@ Example:
 License
 -------
 
-Copyright © 2016–2018 Albert Krewinkel and Robert Winkler except for the
+Copyright © 2016–2020 Albert Krewinkel and Robert Winkler except for the
 following components:
 
 - HTML template: © 2016 Andrew G. York and Diana Mounter
 - dkjson: © 2010-2013 David Heiko Kolf
-- lua-filters: © 2017-2018 John MacFarlane, Albert Krewinkel, Jesse Rosenthal,
+- lua-filters: © 2017-2020 John MacFarlane, Albert Krewinkel, Jesse Rosenthal,
   and Greg Tucker-Kellogg
 
 This program is free software; you can redistribute it and/or modify it under
