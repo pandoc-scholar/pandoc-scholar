@@ -89,10 +89,6 @@ $(OUTFILE_PREFIX).txt: $(ARTICLE_FILE)
 	pandoc $(PANDOC_WRITER_OPTIONS) \
 	       --output $@ $<
 
-
-csl/jats.csl:
-	pandoc --print-default-data-file=jats.csl > $@
-
 ## Writer options are omitted -- we need full control to get
 ## acceptable JATS output.
 $(OUTFILE_PREFIX).jats $(OUTFILE_PREFIX).xml: $(ARTICLE_FILE) \
