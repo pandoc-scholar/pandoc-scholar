@@ -1,3 +1,5 @@
+local List = require 'pandoc.List'
+
 local run_citeproc = function (d, format)
   return pandoc.utils.run_json_filter(d, 'pandoc-citeproc', {format})
 end
@@ -9,7 +11,7 @@ end
 -- first record the citation link targets, then use those targets
 -- to replace faulty targets in the beautified (CSL-adhering)
 -- citations.
-local cite_link_targets = pandoc.List:new{}
+local cite_link_targets = List:new{}
 function record_cite_link_targets (cite)
   local targets = {}
   local record = function (link)
