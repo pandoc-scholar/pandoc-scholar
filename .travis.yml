@@ -32,7 +32,7 @@ install:
 
 script:
   # Make sure that all formats are generated without error
-  - (cd pandoc-scholar && make all)
+  - (cd pandoc-scholar && BIBLIOGRAPHY_FILE=example/bibliography.bib make all)
 
 before_deploy:
   - make dist-clean
