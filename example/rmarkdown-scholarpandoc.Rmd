@@ -3,7 +3,9 @@ title: "testing author list with scholarpandoc"
 date: "1/20/2020"
 output:
   html_document:
-    pandoc_args: ["--lua-filter=../lua-filters/scholarly-metadata/scholarly-metadata.lua"]
+    template: ../templates/pandoc-scholar.html
+    pandoc_args:
+      - "--lua-filter=../lua-filters/scholarly-metadata/scholarly-metadata.lua"
 author:
   - Jane Doe:
       institute:
