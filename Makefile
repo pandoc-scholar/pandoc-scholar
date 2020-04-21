@@ -9,6 +9,8 @@ include $(PANDOC_SCHOLAR_PATH)/pandoc-options.inc.mk
 
 LUA_FILTERS_PATH      ?= $(PANDOC_SCHOLAR_PATH)/lua-filters
 
+PANDOC ?= pandoc
+
 # Configuration (overwrite using Makefile.local.in if necessary)
 ARTICLE_FILE          ?= example/article.md
 OUTFILE_PREFIX        ?= outfile
@@ -26,7 +28,7 @@ all: $(addprefix $(OUTFILE_PREFIX).,$(DEFAULT_EXTENSIONS)) \
      $(addprefix $(OUTFILE_PREFIX).,$(ADDITIONAL_EXTENSIONS))
 
 $(JSON_FILE): $(ARTICLE_FILE) $(LUA_FILTERS)
-	pandoc $(PANDOC_READER_OPTIONS) \
+	$(PANDOC) $(PANDOC_READER_OPTIONS) \
 		     $(foreach filter, $(LUA_FILTERS), --lua-filter=$(filter)) \
 	       --to=json \
 	       --output=$@ $<
@@ -35,7 +37,7 @@ $(OUTFILE_PREFIX).pdf $(OUTFILE_PREFIX).latex: \
 		$(JSON_FILE) \
 		$(TEMPLATE_FILE_LATEX) \
 		$(PANDOC_SCHOLAR_PATH)/scholar-filters/template-helper.lua
-	pandoc $(PANDOC_WRITER_OPTIONS) \
+	$(PANDOC) $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_LATEX_OPTIONS) \
 	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/scholar-filters/template-helper.lua \
 	       --output $@ $<
@@ -43,7 +45,7 @@ $(OUTFILE_PREFIX).pdf $(OUTFILE_PREFIX).latex: \
 $(OUTFILE_PREFIX).docx: $(JSON_FILE) \
 		$(ODT_REFERENCE_FILE) \
 		$(LUA_FILTERS_PATH)/author-info-blocks/author-info-blocks.lua
-	pandoc $(PANDOC_WRITER_OPTIONS) \
+	$(PANDOC) $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_DOCX_OPTIONS) \
 	       --lua-filter=$(LUA_FILTERS_PATH)/author-info-blocks/author-info-blocks.lua \
 	       --output $@ $<
@@ -51,7 +53,7 @@ $(OUTFILE_PREFIX).docx: $(JSON_FILE) \
 $(OUTFILE_PREFIX).odt: $(JSON_FILE) \
 		$(ODT_REFERENCE_FILE) \
 		$(LUA_FILTERS_PATH)/author-info-blocks/author-info-blocks.lua
-	pandoc $(PANDOC_WRITER_OPTIONS) \
+	$(PANDOC) $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_ODT_OPTIONS) \
 	       --lua-filter=$(LUA_FILTERS_PATH)/author-info-blocks/author-info-blocks.lua \
 	       --output $@ $<
@@ -59,7 +61,7 @@ $(OUTFILE_PREFIX).odt: $(JSON_FILE) \
 $(OUTFILE_PREFIX).epub: $(JSON_FILE) \
 		$(TEMPLATE_FILE_EPUB) \
 		$(LUA_FILTERS_PATH)/author-info-blocks/author-info-blocks.lua
-	pandoc $(PANDOC_WRITER_OPTIONS) \
+	$(PANDOC) $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_EPUB_OPTIONS) \
 	       --lua-filter=$(LUA_FILTERS_PATH)/author-info-blocks/author-info-blocks.lua \
 	       --output $@ $<
@@ -68,7 +70,7 @@ $(OUTFILE_PREFIX).html: $(JSON_FILE) \
 		$(TEMPLATE_FILE_HTML) \
 		$(TEMPLATE_STYLE_HTML) \
 		$(PANDOC_SCHOLAR_PATH)/scholar-filters/template-helper.lua
-	pandoc $(PANDOC_WRITER_OPTIONS) \
+	$(PANDOC) $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_HTML_OPTIONS) \
 	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/scholar-filters/template-helper.lua \
 	       --css=$(TEMPLATE_STYLE_HTML) \
@@ -80,13 +82,13 @@ $(OUTFILE_PREFIX).jsonld: $(JSON_FILE) \
 		$(BIBLIOGRAPHY_FILE) \
 		$(PANDOC_SCHOLAR_PATH)/scholar-filters/json-ld.lua \
 		$(PANDOC_SCHOLAR_PATH)/writers/jsonld.lua
-	pandoc --to $(PANDOC_SCHOLAR_PATH)/writers/jsonld.lua \
+	$(PANDOC) --to $(PANDOC_SCHOLAR_PATH)/writers/jsonld.lua \
 	       --metadata "bibliography:$(BIBLIOGRAPHY_FILE)" \
 	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/scholar-filters/json-ld.lua \
 	       --output=$@ $<
 
 $(OUTFILE_PREFIX).txt: $(ARTICLE_FILE)
-	pandoc $(PANDOC_WRITER_OPTIONS) \
+	$(PANDOC) $(PANDOC_WRITER_OPTIONS) \
 	       --output $@ $<
 
 ## Writer options are omitted -- we need full control to get
@@ -96,7 +98,7 @@ $(OUTFILE_PREFIX).jats $(OUTFILE_PREFIX).xml: $(ARTICLE_FILE) \
 		$(PANDOC_SCHOLAR_PATH)/scholar-filters/jats-fixes.lua \
 		$(PANDOC_SCHOLAR_PATH)/scholar-filters/template-helper.lua \
 		csl/jats.csl
-	pandoc $(PANDOC_JATS_OPTIONS) \
+	$(PANDOC) $(PANDOC_JATS_OPTIONS) \
 		     $(foreach filter, $(LUA_FILTERS), --lua-filter=$(filter)) \
 	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/scholar-filters/template-helper.lua \
 	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/scholar-filters/jats-fixes.lua \
