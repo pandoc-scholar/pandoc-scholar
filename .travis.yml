@@ -32,8 +32,7 @@ install:
 
 script:
   # Make sure that all formats are generated without error
-  - (cd pandoc-scholar && BIBLIOGRAPHY_FILE=example/bibliography.bib make all)
-
+  - "(cd pandoc-scholar && BIBLIOGRAPHY_FILE=example/bibliography.bib make all)"
 before_deploy:
   - make dist-clean
   - make archives
@@ -42,7 +41,7 @@ deploy:
   provider: releases
   skip_cleanup: true
   api_key:
-    secure: QvXjw3vfIQtbY2QMmnyxfcIqczQ7J7UZ0nK+xyA9ebvNWuQR0+9XB59fpn41fFgCw151gK8dtVxON4EeoRFM/2+mkSJPBMzEaOA66p8XZYh856gKxh2VrVWPES/GF/dO/+191WH8Rj+YmqcvHt/kHvrGvYX1YGzCDtuLUcRTnIt0MHlBoGoa5ip/5L8hCv8/MXKm35VETOGcj2Qfia4KxCJ8nZg2b+suWx+DonIhsma3kDn8qN9DDrpT7buO4/lqEqYueRpY91YZ5pVangLgwhy38iIfGle7/NAJMPE8lzzPoMtgesmCXkSgGfuMEaeXADPKzTcUf9zHj8RNa/gpOJRe/sGZxVCdDt+xiLHZSRHWLgUwZQGw+c1t4L+ka3coEh8h4Fc1sSdZrw6bmBCKlC2YbchbA5FwdxSLWFndg5CGPck8OAny09tSWk+cnCDZFCdJwL4eQ4jNxjwZOd7hUxUZjD1O1BT2EyYIa14PbP8Mj36U2yacTibb7JPSwTfoJMrcBczGeRJABQhyjgVtpzzwQwiC9SK9VMB1T4Nuw71LbOB2azuBhU42X/3EOEAI3EWNi/o9BmbyfBddxiI1bFfOmh2+b7HxyoTp6kp4QsGVaAjLufStP5pCJhxbU6ByeZRwb5SM8xcCdNKeczgseVmv8KzZpdFSEk4DvncLEXo=
+    secure: haLjV/JczrA3wfsdoBhFQ28oHCON0htnajyi0EQYJtdzo1trwH1loDHwMvDDSNA2Vuc386CfF1vTUn03cnl6WeAJ9xFKROrHyIwORm4WQqFbmccI3xVZkF+Km7FcLQmOQI0higIaZuvhE/vgHbZ5CLd6Cnu+97MmNj74+sRuI76ylGELhXRohjyKXATUsZYT3VAYnmmfTyhFECsEUS6h8QpZlbM/S8aU7jJflivVQUqDwtq8mHk7iCOWNaFcJoQFF0uPwPZfvUNFB67ksd3+7rGh2YRRNYjSLcWPqeUdgT0n6u6k5gOuvQqAEAh2A91TsfsNxzA9PUI0bUSVowFCQpp4uxJIjIYe7bYFy+hkvwZGmNxEFRfV6xHtemi+gKJob9FmMhpSuxaJ5JWI3TJ9bK/uqdhD8Jf+BvE9jslOUXppSZEJ7GopMeNHw5XlWzzAQD9Cf7SzlJ1rCl699cOF3kl+Y0dijPrU4b7KDKIcvKqdY6pu/MTX5unfx9Dn632fjLggIGWRveE20dXEVTYrbolTKMHa3Uqxp59JVxNqiRSy8oRyfYkZzvLhkgFR39voRe52v/RrIoHZsoSVm5DUtTTD/NVJEhQAjBMsEvPC3Y6/L1kIrCfvpVaAFumM8cYuGYwioCBm4aqD3+sw+A1vy7sPHPfEO42ysSGPSarrBIM=
   file:
     - dist/pandoc-scholar.tar.gz
     - dist/pandoc-scholar.zip
