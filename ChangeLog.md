@@ -1,6 +1,39 @@
 ChangeLog
 =========
 
+v2.2.0
+------
+
+Released 2020-04-21
+
+- Running `make clean` is now ensured to only remove generated
+  files (Sam Hiatt).
+
+- JATS support has been improved and produces valid JATS 1.2
+  documents using the Journal Archiving and Interchange tag set.
+  Bibliography entries in the documents are formatted with the
+  given CSL style.
+
+- The default LaTeX template has been updated to work with pandoc
+  2.9.
+
+  + The options for the natbib package can be passed via the
+    `natbiboptions` variable.
+
+  + A new environment `cslreferences` is defined. It is used to
+    contain pandoc-citeproc generated bibliographies.
+
+- New make target `default` has been introduced. It is run
+  instead of target `all` when make is called a specific target.
+
+- The example is now generated with links between examples and
+  references. Furthermore, the CSL file is explicitly defined to
+  make it clearer how an alternative style can be used.
+
+- The pandoc and pandoc-citeproc executables can now be set via
+  the `PANDOC` and `PANDOC_CITEPROC` variables, respectively.
+  The default is to use the binaries in the user's PATH.
+
 v2.1.1
 ------
 
