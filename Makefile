@@ -91,14 +91,18 @@ $(OUTFILE_PREFIX).txt: $(ARTICLE_FILE)
 	$(PANDOC) $(PANDOC_WRITER_OPTIONS) \
 	       --output $@ $<
 
-## Writer options are omitted -- we need full control to get
-## acceptable JATS output.
+## Process the original ARTICLE_FILE instead of the pre-processed
+## JSON file, as we need full control over bibliography handling
+## to get acceptable JATS output. All PANDOC_WRITER_OPTIONS are
+## omitted for the same reason.
 $(OUTFILE_PREFIX).jats $(OUTFILE_PREFIX).xml: $(ARTICLE_FILE) \
 		$(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.jats \
 		$(PANDOC_SCHOLAR_PATH)/scholar-filters/jats-fixes.lua \
 		$(PANDOC_SCHOLAR_PATH)/scholar-filters/template-helper.lua \
-		csl/jats.csl
-	$(PANDOC) $(PANDOC_JATS_OPTIONS) \
+		$(PANDOC_SCHOLAR_PATH)/csl/jats.csl
+	$(PANDOC) \
+	       $(PANDOC_READER_OPTIONS) \
+	       $(PANDOC_JATS_OPTIONS) \
 		     $(foreach filter, $(LUA_FILTERS), --lua-filter=$(filter)) \
 	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/scholar-filters/template-helper.lua \
 	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/scholar-filters/jats-fixes.lua \
