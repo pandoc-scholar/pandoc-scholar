@@ -1,6 +1,26 @@
 ChangeLog
 =========
 
+v2.2.1
+------
+
+Released 2020-04-25
+
+- Fixed incorrect path in JATS target: a file in the dependency
+  list of the JATS target was missing was missing a path prefix,
+  causing make to fail the Makefile was included in a different
+  directory.
+
+- Fixed bibliography and citation handling in JATS: citations
+  were formatted incorrectly if no CSL file was given. We also
+  make sure that `PANDOC_READER_OPTIONS` are respected for JATS.
+
+- Simplify bibliography handling for JSON-LD: it is now
+  sufficient to define a bibliography field in the article
+  metadata. Previously, JSON-LD generation failed unless the
+  `BIBLIOGRAPHY_FILE` variable was set; the requirement for this
+  variable has been removed.
+
 v2.2.0
 ------
 
