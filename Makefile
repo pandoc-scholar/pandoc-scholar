@@ -95,10 +95,16 @@ $(OUTFILE_PREFIX).txt: $(ARTICLE_FILE)
 ## JSON file, as we need full control over bibliography handling
 ## to get acceptable JATS output. All PANDOC_WRITER_OPTIONS are
 ## omitted for the same reason.
+##
+## The JSON file is required only for metadata (csl) extraction
+## by the jats-fixes.lua script, as pandoc overrides the CSL
+## field when converting to JATS.
 $(OUTFILE_PREFIX).jats $(OUTFILE_PREFIX).xml: $(ARTICLE_FILE) \
+		$(JSON_FILE) \
 		$(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.jats \
 		$(PANDOC_SCHOLAR_PATH)/scholar-filters/jats-fixes.lua \
 		$(PANDOC_SCHOLAR_PATH)/scholar-filters/template-helper.lua \
+		$(PANDOC_SCHOLAR_PATH)/csl/chicago-author-date.csl \
 		$(PANDOC_SCHOLAR_PATH)/csl/jats.csl
 	$(PANDOC) \
 	       $(PANDOC_READER_OPTIONS) \
@@ -106,8 +112,9 @@ $(OUTFILE_PREFIX).jats $(OUTFILE_PREFIX).xml: $(ARTICLE_FILE) \
 		     $(foreach filter, $(LUA_FILTERS), --lua-filter=$(filter)) \
 	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/scholar-filters/template-helper.lua \
 	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/scholar-filters/jats-fixes.lua \
-	       --metadata=jats_csl=$(PANDOC_SCHOLAR_PATH)/csl/jats.csl \
-	       --csl=$(PANDOC_SCHOLAR_PATH)/csl/chicago-author-date.csl \
+	       --metadata=jats-csl=$(PANDOC_SCHOLAR_PATH)/csl/jats.csl \
+	       --metadata=pandoc-scholar-json=$(JSON_FILE) \
+	       --metadata=csl-path=$(PANDOC_SCHOLAR_PATH)/csl \
 	       --to=jats \
 	       --output $@ $<
 

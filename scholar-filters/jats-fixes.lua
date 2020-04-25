@@ -1,4 +1,5 @@
 local List = require 'pandoc.List'
+local system = require 'pandoc.system'
 
 local run_citeproc = function (d, format)
   return pandoc.utils.run_json_filter(d, 'pandoc-citeproc', {format})
@@ -7,6 +8,16 @@ end
 local is_refs = function (b)
   return b.identifier == 'refs'
 end
+
+-- code for a Lua writer which just returns the csl meta value.
+local csl_writer = [[
+function Doc (body, meta, variables)
+  return meta.csl or ''
+end
+function Str (s) return s end
+function Space () return ' ' end
+setmetatable(_G, {__index = function () return function () return '' end end})
+]]
 
 -- first record the citation link targets, then use those targets
 -- to replace faulty targets in the beautified (CSL-adhering)
@@ -36,13 +47,35 @@ function replace_cite_link_targets (cite)
   return pandoc.walk_inline(cite, {Link = replace})
 end
 
+local original_csl = function (json_file)
+  local fh = io.open(json_file)
+  local json = fh:read('*a')
+  fh:close()
+  return system.with_temporary_directory('scholar-csl', function (d)
+    return system.with_working_directory(d, function()
+      local csl_writer_file = 'csl.lua'
+      local fh = io.open('csl.lua', 'w')
+      fh:write(csl_writer)
+      fh:close()
+      local args = {'--to', 'csl.lua', '--from', 'json'}
+      return pandoc.pipe('pandoc', args, json):gsub('%s$', '')
+    end)
+  end)
+end
+
 -- Replace citation section, update links
 function Pandoc (doc)
   -- Use csl only for citations in the text; the bibliography is
   -- set using the default JATS csl.
-  local csl = doc.meta.csl or doc.meta['citation-style']
 
-  doc.meta.csl = doc.meta.jats_csl
+  local csl = original_csl(doc.meta['pandoc-scholar-json'])
+  -- Fall back to chicago if `csl` is empty
+  if csl == '' then
+    csl = doc.meta['csl-path'] .. '/chicago-author-date.csl'
+  end
+
+  doc.meta.csl = doc.meta['jats-csl']
+    or (doc.meta['csl-path'] .. '/jats.csl')
   doc.meta['citation-style'] = nil
   doc.meta['link-citations'] = true
   local jats_doc = run_citeproc(doc, 'jats')
