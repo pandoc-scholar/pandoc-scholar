@@ -11,6 +11,9 @@ TEMPLATE_STYLE_HTML   ?= $(PANDOC_SCHOLAR_PATH)/templates/styles/pandoc-scholar.
 
 ## Pandoc options
 PANDOC_READER_OPTIONS ?=
+ifdef BIBLIOGRAPHY_FILE
+PANDOC_READER_OPTIONS += --metadata "bibliography:$(BIBLIOGRAPHY_FILE)"
+endif
 
 ifndef PANDOC_WRITER_OPTIONS
 PANDOC_WRITER_OPTIONS  = --standalone

@@ -83,7 +83,6 @@ $(OUTFILE_PREFIX).jsonld: $(JSON_FILE) \
 		$(PANDOC_SCHOLAR_PATH)/scholar-filters/json-ld.lua \
 		$(PANDOC_SCHOLAR_PATH)/writers/jsonld.lua
 	$(PANDOC) --to $(PANDOC_SCHOLAR_PATH)/writers/jsonld.lua \
-	       --metadata "bibliography:$(BIBLIOGRAPHY_FILE)" \
 	       --lua-filter=$(PANDOC_SCHOLAR_PATH)/scholar-filters/json-ld.lua \
 	       --output=$@ $<
 
