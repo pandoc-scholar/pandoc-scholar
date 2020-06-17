@@ -1,6 +1,15 @@
 ChangeLog
 =========
 
+v2.2.2
+------
+
+Released 2020-06-17
+
+- Update Lua filters to their most recent versions. This includes
+  a fix to the abstract-to-meta filter, which would sometimes
+  produce wrong results when used with pandoc 2.8 or newer.
+
 v2.2.1
 ------
 
