@@ -8,6 +8,9 @@ This repository collects Lua filters for pandoc.
 To learn about Lua filters, see the
 [documentation](http://pandoc.org/lua-filters.html).
 
+Structure
+---------
+
 Each filter goes in its own subdirectory.  Each subdirectory contains:
 
 - the filter itself (e.g. `wordcount.lua`)
@@ -16,6 +19,22 @@ Each filter goes in its own subdirectory.  Each subdirectory contains:
 - some data files used for the tests, which may also serve
   as examples
 
-PRs for new filters are welcome, provided they conform to
-these guidelines.
+Requirements
+------------
 
+Filters are tested against the latest pandoc version.  There is
+no guarantee that filters will work with older versions, but
+many do.
+
+Some filters depend on external programs, which must be installed
+separately.  Refer to the filters' README for detailed
+requirements.
+
+Contributing
+------------
+
+PRs for new filters are welcome, provided they conform to these
+guidelines. Lua code should ideally follow the Olivine Labs [Lua
+style guide].
+
+[Lua style guide]: https://github.com/Olivine-Labs/lua-style-guide
