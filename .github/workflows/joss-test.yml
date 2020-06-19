@@ -1,0 +1,17 @@
+on:
+  push:
+
+jobs:
+  joss-article:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v1
+      - uses: docker://tarleb/paperdraft:latest
+        with:
+          args: example/article.md
+
+      - name: Upload
+        uses: actions/upload-artifact@v1
+        with:
+          name: paper
+          path: paper.pdf
