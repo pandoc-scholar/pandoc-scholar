@@ -80,7 +80,7 @@ $for(author)$
     $author.name$</span><sup>$if(author.correspondence)$$if(author.email)$<a href="mailto:$author.email$">✉</a> $endif$$endif$$for(author.institute_indices)$$author.institute_indices$$sep$,$endfor$$if(author.equal_contributor)$,$if(equal_contributor_symbol)$$equal_contributor_symbol$$else$*$endif$$endif$</sup>$sep$,
 $endfor$
 </p>
-<div class="author_affiliations">
+<div class="author-affiliations">
 $for(institute)$
   <div class="affiliation"><sup>$institute.index$</sup>$institute.name$$if(institute.address)$, $institute.address$$endif$
   </div>
