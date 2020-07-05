@@ -33,6 +33,11 @@ function Meta (meta)
     meta.has_correspondence = meta.has_correspondence
       or author.correspondence and author.email
   end
+  -- helper attributes
+  if #meta.author > 0 then
+    meta.author[1].first = true
+    meta.author[#meta.author].last = true
+  end
 
   for i, institute in ipairs(meta.institute) do
     institute.index = tostring(i)
