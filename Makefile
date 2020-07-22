@@ -43,7 +43,7 @@ $(OUTFILE_PREFIX).pdf $(OUTFILE_PREFIX).latex: \
 	       --output $@ $<
 
 $(OUTFILE_PREFIX).docx: $(JSON_FILE) \
-		$(ODT_REFERENCE_FILE) \
+		$(DOCX_REFERENCE_FILE) \
 		$(LUA_FILTERS_PATH)/author-info-blocks/author-info-blocks.lua
 	$(PANDOC) $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_DOCX_OPTIONS) \
