@@ -20,17 +20,34 @@ author:
     correspondence: 'yes'
 date: "1/20/2020"
 output:
-  pdf_document:
+  bookdown::word_document2:
+    fig_caption: yes
+    reference_docx: ../templates/template.docx
+    pandoc_args:
+    - --lua-filter=../lua-filters/scholarly-metadata/scholarly-metadata.lua
+    - --lua-filter=../lua-filters/author-info-blocks/author-info-blocks.lua
+    - --lua-filter=../lua-filters/abstract-to-meta/abstract-to-meta.lua
+    - --lua-filter=../lua-filters/pagebreak/pagebreak.lua
+  bookdown::html_document2:    
+    fig_caption: yes
+    template: ../templates/pandoc-scholar.html
+    css: ../templates/styles/pandoc-scholar.css
+    self_contained: true
+    pandoc_args:
+      - --lua-filter=../lua-filters/cito/cito.lua
+      - --lua-filter=../lua-filters/abstract-to-meta/abstract-to-meta.lua
+      - --lua-filter=../lua-filters/scholarly-metadata/scholarly-metadata.lua
+      - --lua-filter=../scholar-filters/template-helper.lua
+  bookdown::pdf_document2:
+    keep_tex: true
+    toc: false
+    fig_caption: yes
     template: ../templates/pandoc-scholar.latex
     pandoc_args:
-    - --lua-filter=../lua-filters/abstract-to-meta/abstract-to-meta.lua
-    - --lua-filter=../lua-filters/scholarly-metadata/scholarly-metadata.lua
-  word_document: default
-  html_document:
-    template: ../templates/pandoc-scholar.html
-    pandoc_args:
-    - --lua-filter=../lua-filters/abstract-to-meta/abstract-to-meta.lua
-    - --lua-filter=../lua-filters/scholarly-metadata/scholarly-metadata.lua
+      - --lua-filter=../lua-filters/cito/cito.lua
+      - --lua-filter=../lua-filters/abstract-to-meta/abstract-to-meta.lua
+      - --lua-filter=../lua-filters/scholarly-metadata/scholarly-metadata.lua
+      - --lua-filter=../scholar-filters/template-helper.lua  
 institute:
 - fosg:
     name: Formatting Open Science Group
@@ -149,3 +166,8 @@ Ut dolores natus et sunt delectus nulla. Ipsum eum quia ex est ut quia. Ratione
 et eius consequatur veritatis hic expedita ea.
 
 # References
+
+pandoc_args:
+    - --lua-filter=../lua-filters/scholarly-metadata/scholarly-metadata.lua
+    - --lua-filter=../lua-filters/author-info-blocks/author-info-blocks.lua
+    - --lua-filter=../lua-filters/abstract-to-meta/abstract-to-meta.lua
