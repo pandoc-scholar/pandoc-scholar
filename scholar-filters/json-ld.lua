@@ -189,7 +189,7 @@ function json_ld (meta)
 end
 
 local function bibliography(bibfilename)
-  if not bibfilename then
+  if not bibfilename or bibfilename == '' then
     return {}
   end
   local bibfile = io.popen("pandoc-citeproc --bib2json " .. bibfilename, "r")
@@ -225,7 +225,8 @@ function Meta (meta)
   end
   metadata.author = tmp_authors
 
-  metadata.bibliography_records = bibliography(meta.bibliography)
+  local bib = pandoc.utils.stringify(meta.bibliography)
+  metadata.bibliography_records = bibliography(bib)
   local jsonld_object = json_ld(metadata)
   meta.jsonld = json.encode(jsonld_object)
 

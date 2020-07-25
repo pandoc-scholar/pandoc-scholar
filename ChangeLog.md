@@ -1,6 +1,68 @@
 ChangeLog
 =========
 
+v2.2.2
+------
+
+Released 2020-06-17
+
+- Update Lua filters to their most recent versions. This includes
+  a fix to the abstract-to-meta filter, which would sometimes
+  produce wrong results when used with pandoc 2.8 or newer.
+
+v2.2.1
+------
+
+Released 2020-04-25
+
+- Fixed incorrect path in JATS target: a file in the dependency
+  list of the JATS target was missing was missing a path prefix,
+  causing make to fail the Makefile was included in a different
+  directory.
+
+- Fixed bibliography and citation handling in JATS: citations
+  were formatted incorrectly if no CSL file was given. We also
+  make sure that `PANDOC_READER_OPTIONS` are respected for JATS.
+
+- Simplify bibliography handling for JSON-LD: it is now
+  sufficient to define a bibliography field in the article
+  metadata. Previously, JSON-LD generation failed unless the
+  `BIBLIOGRAPHY_FILE` variable was set; the requirement for this
+  variable has been removed.
+
+v2.2.0
+------
+
+Released 2020-04-21
+
+- Running `make clean` is now ensured to only remove generated
+  files (Sam Hiatt).
+
+- JATS support has been improved and produces valid JATS 1.2
+  documents using the Journal Archiving and Interchange tag set.
+  Bibliography entries in the documents are formatted with the
+  given CSL style.
+
+- The default LaTeX template has been updated to work with pandoc
+  2.9.
+
+  + The options for the natbib package can be passed via the
+    `natbiboptions` variable.
+
+  + A new environment `cslreferences` is defined. It is used to
+    contain pandoc-citeproc generated bibliographies.
+
+- New make target `default` has been introduced. It is run
+  instead of target `all` when make is called a specific target.
+
+- The example is now generated with links between examples and
+  references. Furthermore, the CSL file is explicitly defined to
+  make it clearer how an alternative style can be used.
+
+- The pandoc and pandoc-citeproc executables can now be set via
+  the `PANDOC` and `PANDOC_CITEPROC` variables, respectively.
+  The default is to use the binaries in the user's PATH.
+
 v2.1.1
 ------
 
