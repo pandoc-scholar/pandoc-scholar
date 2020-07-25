@@ -1,41 +1,48 @@
 ---
-title: "testing author list with scholarpandoc"
+title: "Testing author list with scholarpandoc"
+author:
+- Jane Doe:
+    institute:
+    - fosg
+    - fop
+    email: jane.doe@example.com
+    orcid: 0000-0000-0000-0000
+    equal_contributor: 'yes'
+    correspondence: 'yes'
+- John Q. Doe:
+    institute: fosg
+    equal_contributor: 'yes'
+- Peder Ås:
+    institute: fosg
+- Juan Pérez:
+    institute: acme
+    email: juan.perez@example.edu
+    correspondence: 'yes'
 date: "1/20/2020"
 output:
+  pdf_document:
+    template: ../templates/pandoc-scholar.latex
+    pandoc_args:
+    - --lua-filter=../lua-filters/abstract-to-meta/abstract-to-meta.lua
+    - --lua-filter=../lua-filters/scholarly-metadata/scholarly-metadata.lua
+  word_document: default
   html_document:
     template: ../templates/pandoc-scholar.html
     pandoc_args:
-      - "--lua-filter=../lua-filters/scholarly-metadata/scholarly-metadata.lua"
-author:
-  - Jane Doe:
-      institute:
-        - fosg
-        - fop
-      email: jane.doe@example.com
-      orcid: 0000-0000-0000-0000
-      equal_contributor: "yes"
-      correspondence: "yes"
-  - John Q. Doe:
-      institute: fosg
-      equal_contributor: "yes"
-  - Peder Ås:
-      institute: fosg
-  - Juan Pérez:
-      institute: acme
-      email: juan.perez@example.edu
-      correspondence: "yes"
+    - --lua-filter=../lua-filters/abstract-to-meta/abstract-to-meta.lua
+    - --lua-filter=../lua-filters/scholarly-metadata/scholarly-metadata.lua
 institute:
-  - fosg:
-      name: Formatting Open Science Group
-      address: 23 Science Street, Eureka, Mississippi, USA
-      phone: +1 (555) 423 1338
-      email: '{firstname}.{lastname}\@fosg.example.com'
-  - fop: Federation of Planets
-  - acme:
-      name: Acme Corporation
+- fosg:
+    name: Formatting Open Science Group
+    address: 23 Science Street, Eureka, Mississippi, USA
+    phone: +1 (555) 423 1338
+    email: '{firstname}.{lastname}\@fosg.example.com'
+- fop: Federation of Planets
+- acme:
+    name: Acme Corporation
 bibliography: ../example/bibliography.bib
 csl: ../csl/chicago-author-date.csl
-link-citations: true
+link-citations: yes
 project:
   title: Pandoc Scholar Example
   zip-url: https://github.com/pandoc-scholar/pandoc-scholar/releases
