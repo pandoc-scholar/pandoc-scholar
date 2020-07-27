@@ -1,0 +1,173 @@
+---
+title: "Testing author list with scholarpandoc"
+author:
+- Jane Doe:
+    institute:
+    - fosg
+    - fop
+    email: jane.doe@example.com
+    orcid: 0000-0000-0000-0000
+    equal_contributor: 'yes'
+    correspondence: 'yes'
+- John Q. Doe:
+    institute: fosg
+    equal_contributor: 'yes'
+- Peder Ås:
+    institute: fosg
+- Juan Pérez:
+    institute: acme
+    email: juan.perez@example.edu
+    correspondence: 'yes'
+date: "1/20/2020"
+output:
+  bookdown::word_document2:
+    fig_caption: yes
+    reference_docx: ../templates/template.docx
+    pandoc_args:
+    - --lua-filter=../lua-filters/scholarly-metadata/scholarly-metadata.lua
+    - --lua-filter=../lua-filters/author-info-blocks/author-info-blocks.lua
+    - --lua-filter=../lua-filters/abstract-to-meta/abstract-to-meta.lua
+    - --lua-filter=../lua-filters/pagebreak/pagebreak.lua
+  bookdown::html_document2:    
+    fig_caption: yes
+    template: ../templates/pandoc-scholar.html
+    css: ../templates/styles/pandoc-scholar.css
+    self_contained: true
+    pandoc_args:
+      - --lua-filter=../lua-filters/cito/cito.lua
+      - --lua-filter=../lua-filters/abstract-to-meta/abstract-to-meta.lua
+      - --lua-filter=../lua-filters/scholarly-metadata/scholarly-metadata.lua
+      - --lua-filter=../scholar-filters/template-helper.lua
+  bookdown::pdf_document2:
+    keep_tex: true
+    toc: false
+    fig_caption: yes
+    template: ../templates/pandoc-scholar.latex
+    pandoc_args:
+      - --lua-filter=../lua-filters/cito/cito.lua
+      - --lua-filter=../lua-filters/abstract-to-meta/abstract-to-meta.lua
+      - --lua-filter=../lua-filters/scholarly-metadata/scholarly-metadata.lua
+      - --lua-filter=../scholar-filters/template-helper.lua  
+institute:
+- fosg:
+    name: Formatting Open Science Group
+    address: 23 Science Street, Eureka, Mississippi, USA
+    phone: +1 (555) 423 1338
+    email: '{firstname}.{lastname}\@fosg.example.com'
+- fop: Federation of Planets
+- acme:
+    name: Acme Corporation
+bibliography: ../example/bibliography.bib
+csl: ../csl/chicago-author-date.csl
+link-citations: yes
+project:
+  title: Pandoc Scholar Example
+  zip-url: https://github.com/pandoc-scholar/pandoc-scholar/releases
+  github-url: https://github.com/pandoc-scholar/pandoc-scholar/
+...
+
+# Abstract
+
+This is an example article.  There is not much to see but filler text.
+
+
+# Further reading
+
+See the [pandoc manual](http://pandoc.org/MANUAL.html) for more information on
+pandoc.
+
+Authors struggling to fill this document with content are referred to
+@Upper_writers_1974.
+
+
+# Lorem Ipsum
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+culpa qui officia deserunt mollit anim id est laborum.
+
+
+## Dolor sit amet
+
+Deserunt excepturi commodi sit qui velit quis. Delectus sit omnis culpa
+accusamus repellat iusto vel. Quod deserunt quasi nisi dolor. Quo eum id
+reiciendis dolor. Est qui illum et.
+
+Quo dolore molestiae et laboriosam occaecati explicabo corrupti. Earum expedita
+ducimus quaerat est quam ut molestiae. Illum deleniti vel labore facilis et cum
+est. Est nemo est vel ad. Assumenda consequatur rerum officiis atque officia.
+Est nihil iste cumque ad qui.
+
+Eaque sed sit totam enim. Et explicabo illum rerum aut. Aspernatur sit dolor
+animi tempora cum. Maxime in soluta aut. Explicabo id maiores voluptates aut
+voluptas id. Dolore sed labore voluptatem omnis doloribus mollitia aliquid
+cupiditate.
+
+In rerum saepe placeat. Deleniti suscipit sed quam fugit assumenda sit et
+tempora. Veniam illum expedita quia error qui quibusdam rerum. Qui ut sunt est
+eos.
+
+Recusandae et sit ut. Impedit deserunt consequatur et dignissimos vel et.
+Eveniet voluptatem magni quis est dolore excepturi officia nihil. Debitis quae
+commodi error.
+
+Modi debitis et ut saepe saepe dolorem. Quis sed autem expedita est voluptate
+esse neque. Quod aspernatur quam velit placeat nihil omnis debitis. Corporis sit
+rerum consectetur possimus rerum consequuntur. Rerum quas ut repellendus
+tenetur. Consequuntur adipisci dolores eveniet qui est ipsum.
+
+Atque deserunt necessitatibus unde facere amet molestiae. Ipsam at quia placeat
+aliquam autem. Enim corporis accusamus consequatur.
+
+Et vitae unde perferendis tenetur cupiditate non exercitationem. Aut molestiae
+sed est. Deserunt repudiandae non quia esse ad vitae vel in. Et reprehenderit
+dolore et aut distinctio.
+
+Vel quia molestiae quod sint fuga omnis est fuga. Minus quaerat repellat quod.
+Rerum rerum enim repellendus rerum consequatur non perspiciatis. Illo sapiente
+sed natus ipsa quia temporibus. Est nostrum fugit odio non voluptatem odit
+rerum. Et consequatur aut nostrum accusamus earum.
+
+Sit explicabo iure eligendi consequatur. Consequatur atque praesentium
+consequatur dolores quam. Neque eius provident harum placeat. Quo aut pariatur
+illum laborum porro minima. Dolorem nobis esse laudantium. Perspiciatis
+voluptate deleniti voluptatem et.
+
+Quos assumenda magnam non inventore. Adipisci repellendus eligendi possimus
+voluptate numquam voluptatem natus. Deleniti cupiditate facilis commodi aliquid
+voluptatem laudantium autem similique. Vel sunt cupiditate consequatur. Dolorum
+voluptatem nihil culpa fugiat non itaque animi iusto. Unde incidunt numquam
+vitae.
+
+Eius provident voluptatem animi quidem quia. Velit omnis voluptas atque.
+Voluptatem accusamus atque blanditiis commodi aspernatur ullam ad. Nulla quidem
+fugiat explicabo quo dolor hic.
+
+Rerum dolore quo ratione sed aspernatur doloremque. Ut neque laudantium quae
+enim dolores et. Laudantium dolores id assumenda autem aspernatur. Accusamus
+doloribus nihil rerum et atque est aut delectus.
+
+Nulla itaque mollitia vitae accusamus. Eveniet soluta praesentium dolore harum
+culpa. Totam voluptatem non aspernatur.
+
+Eveniet in illo consequatur. Fugiat et totam unde nihil quis. Non et velit
+recusandae blanditiis unde. Eaque fugiat id pariatur. Non numquam minima aut.
+Iste eos et autem et exercitationem velit officiis vero.
+
+Ullam minima quisquam est ducimus iste. Commodi occaecati inventore provident
+voluptatem repudiandae. Quia est qui dolore sit nisi officia doloremque dolor.
+Perspiciatis tempore laudantium quia repellendus quia deleniti. Sed consequuntur
+autem quisquam aliquam.
+
+Ut dolores natus et sunt delectus nulla. Ipsum eum quia ex est ut quia. Ratione
+et eius consequatur veritatis hic expedita ea.
+
+# References
+
+pandoc_args:
+    - --lua-filter=../lua-filters/scholarly-metadata/scholarly-metadata.lua
+    - --lua-filter=../lua-filters/author-info-blocks/author-info-blocks.lua
+    - --lua-filter=../lua-filters/abstract-to-meta/abstract-to-meta.lua
