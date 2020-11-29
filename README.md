@@ -43,7 +43,7 @@ is possible this way.
 ### Demo
 
 An example document plus bibliography is provided in the *example*
-folder. Running `make` in the project's root folder will process the
+folder. Running `make` in the *example* folder will process the
 example article, generating output like below:
 
 ![example article screenshot](https://pandoc-scholar.github.io/example/header.png)
@@ -61,7 +61,7 @@ Prerequisites
 -------------
 
 This package builds on [pandoc](http://pandoc.org/), the universal
-document converter, version 2.1 or later. See the pandoc website for
+document converter, version 2.11 or later. See the pandoc website for
 [installation instructions](http://pandoc.org/installing.html) and
 suggestions for LaTeX packages, which we use for PDF generation.
 
