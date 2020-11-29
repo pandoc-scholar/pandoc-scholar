@@ -12,8 +12,6 @@ LUA_FILTERS_PATH      ?= $(PANDOC_SCHOLAR_PATH)/lua-filters/
 # Lua filter release to use
 LUA_FILTERS_VERSION   ?= v2020-11-29
 
-PANDOC ?= pandoc
-
 # Configuration (overwrite using Makefile.local.in if necessary)
 ARTICLE_FILE          ?= example/article.md
 OUTFILE_PREFIX        ?= outfile

@@ -1,7 +1,7 @@
 # Settings for Pandoc
 # ===================
 
-PANDOC_CITEPROC ?= pandoc-citeproc
+PANDOC ?= pandoc
 
 TEMPLATE_FILE_LATEX   ?= $(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.latex
 TEMPLATE_FILE_HTML    ?= $(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.html
@@ -17,7 +17,7 @@ endif
 
 ifndef PANDOC_WRITER_OPTIONS
 PANDOC_WRITER_OPTIONS  = --standalone
-PANDOC_WRITER_OPTIONS += --filter=$(PANDOC_CITEPROC)
+PANDOC_WRITER_OPTIONS += --citeproc
 ifdef BIBLIOGRAPHY_FILE
 PANDOC_WRITER_OPTIONS += --metadata "bibliography:$(BIBLIOGRAPHY_FILE)"
 PANDOC_WRITER_OPTIONS += --bibliography=$(BIBLIOGRAPHY_FILE)
