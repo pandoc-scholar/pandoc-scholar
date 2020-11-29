@@ -27,8 +27,8 @@ institute:
   - fop: Federation of Planets
   - acme:
       name: Acme Corporation
-bibliography: example/bibliography.bib
-csl: csl/chicago-author-date.csl
+bibliography: bibliography.bib
+csl: apa.csl
 link-citations: true
 project:
   title: Pandoc Scholar Example
