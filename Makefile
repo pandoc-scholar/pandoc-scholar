@@ -126,7 +126,9 @@ ifneq ($(LUA_FILTERS_PATH),)
 lua_filters_url       ?= https://github.com/pandoc/lua-filters/releases
 
 .PHONY: init
-$(LUA_FILTERS_PATH) init:
+init: $(LUA_FILTERS_PATH)
+
+$(LUA_FILTERS_PATH):
 	mkdir -p $@
 	curl --location --silent --show-error \
 	    $(lua_filters_url)/download/$(LUA_FILTERS_VERSION)/lua-filters.tar.gz |\
