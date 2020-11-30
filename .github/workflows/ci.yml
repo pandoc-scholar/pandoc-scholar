@@ -15,20 +15,25 @@ on:
 jobs:
   test:
     runs-on: ubuntu-18.04
-    env:
-      DOWNLOAD_URL: "https://github.com/jgm/pandoc/releases/download"
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Create Docker image
         run: |
-          docker build --tag tarleb/pandoc-scholar .
+          docker build --tag pandocscholar/ubuntu:dev .
 
       - name: Run Docker on example
         run: |
           docker run --rm \
                  --user "$(id -u):$(id -g)" \
                  --volume "$(pwd)/example:/data" \
-                 tarleb/pandoc-scholar
+                 pandocscholar/ubuntu:dev
+
+      - name: Login to Docker Hub
+        run: >-
+          echo "${{ secrets.DOCKER_HUB_TOKEN }}" |
+            docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
+
+      - name: Push dev image
+        run: docker push pandocscholar/ubuntu:dev
