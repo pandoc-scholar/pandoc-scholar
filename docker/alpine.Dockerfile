@@ -3,6 +3,7 @@ RUN apk --no-cache add ca-certificates curl make zip
 
 WORKDIR /app
 COPY . /app
+env NO_GNU_TAR=true
 RUN make archives
 
 

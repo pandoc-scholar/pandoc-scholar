@@ -123,20 +123,29 @@ $(OUTFILE_PREFIX).jats $(OUTFILE_PREFIX).xml: \
 
 ifneq ($(LUA_FILTERS_PATH),)
 # Base release URL from which Lua filters are downloaded
-lua_filters_url       ?= https://github.com/pandoc/lua-filters/releases
+lua_filters_url = https://github.com/pandoc/lua-filters/releases
 
 .PHONY: init
 init: $(LUA_FILTERS_PATH)
 
+ifdef NO_GNU_TAR
 $(LUA_FILTERS_PATH):
 	mkdir -p $@
 	curl --location --silent --show-error \
-	    $(lua_filters_url)/download/$(LUA_FILTERS_VERSION)/lua-filters.tar.gz |\
-      tar --strip-components=2 \
+	     $(lua_filters_url)/download/$(LUA_FILTERS_VERSION)/lua-filters.tar.gz |\
+	    tar -C /tmp -zvxf -
+	cp -a /tmp/lua-filters/filters/* $@
+	rm -rf /tmp/lua-filters
+else
+$(LUA_FILTERS_PATH):
+	mkdir -p $@
+	curl --location --silent --show-error \
+	     $(lua_filters_url)/download/$(LUA_FILTERS_VERSION)/lua-filters.tar.gz |\
+	    tar --strip-components=2 \
 	        --one-top-level=$@ \
 	        -zvxf - \
 	        lua-filters/filters/
-
+endif
 endif
 
 clean:
