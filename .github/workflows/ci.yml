@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  pull_request:
+    paths-ignore:
+      - README.md
+      - ChangeLog.md
+      - LICENSE
+  push:
+    paths-ignore:
+      - README.md
+      - ChangeLog.md
+      - LICENSE
+
+jobs:
+  test:
+    runs-on: ubuntu-18.04
+    env:
+      DOWNLOAD_URL: "https://github.com/jgm/pandoc/releases/download"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Create Docker image
+        run: |
+          docker build --tag tarleb/pandoc-scholar .
+
+      - name: Run Docker on example
+        run: |
+          docker run --rm \
+                 --user "$(id -u):$(id -g)" \
+                 --volume "$(pwd)/example:/data" \
+                 tarleb/pandoc-scholar
