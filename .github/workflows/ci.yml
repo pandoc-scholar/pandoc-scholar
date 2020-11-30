@@ -13,22 +13,31 @@ on:
       - LICENSE
 
 jobs:
-  test:
+  docker:
     runs-on: ubuntu-18.04
+    strategy:
+      fail-fast: true
+      matrix:
+        distro:
+          - ubuntu
+          - alpine
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
       - name: Create Docker image
         run: |
-          docker build --tag pandocscholar/ubuntu:dev .
+          docker build \
+              --tag pandocscholar/${{ matrix.distro }}:dev \
+              --file docker/${{ matrix.distro }}.Dockerfile \
+              .
 
       - name: Run Docker on example
         run: |
           docker run --rm \
                  --user "$(id -u):$(id -g)" \
                  --volume "$(pwd)/example:/data" \
-                 pandocscholar/ubuntu:dev
+                 pandocscholar/${{ matrix.distro }}:dev
 
       - name: Login to Docker Hub
         run: >-
@@ -36,4 +45,4 @@ jobs:
             docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
 
       - name: Push dev image
-        run: docker push pandocscholar/ubuntu:dev
+        run: docker push pandocscholar/${{ matrix.distro }}:dev
