@@ -1,0 +1,93 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  release:
+    name: Release Artifacts
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Build collection
+        run: make init archives
+
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: pandoc-scholar ${{ github.ref }}
+          draft: true
+          prerelease: false
+
+      - name: Add zip archive to release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/pandoc-scholar.zip
+          asset_name: pandoc-scholar.zip
+          asset_content_type: application/zip
+
+      - name: Add tar archive to release
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/pandoc-scholar.tar.gz
+          asset_name: pandoc-scholar.tar.gz
+          asset_content_type: application/x-gtar
+
+  docker:
+    name: Docker release
+    runs-on: ubuntu-18.04
+    strategy:
+      fail-fast: false
+      matrix:
+        distro:
+          - ubuntu
+          - alpine
+    steps:
+      - name: Create Docker image
+        run: |
+          docker build \
+              --tag pandocscholar/${{ matrix.distro }}:latest \
+              --file docker/${{ matrix.distro }}.Dockerfile \
+              .
+
+      - name: Run Docker on example
+        run: |
+          docker run --rm \
+                 --user "$(id -u):$(id -g)" \
+                 --volume "$(pwd)/example:/data" \
+                 pandocscholar/${{ matrix.distro }}:latest
+
+      - name: Login to Docker Hub
+        run: >-
+          echo "${{ secrets.DOCKER_HUB_TOKEN }}" |
+            docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
+
+      - name: Push image as latest
+        run: docker push pandocscholar/${{ matrix.distro }}:latest
+
+      - name: Push image as version
+        run: |
+          version=$(printf "${{ github.ref }}" | sed 's#.*v\(.*\)$#\1#')
+          if [ -n "${version}" ]; then
+              docker tag \
+                  pandocscholar/${{ matrix.distro }}:latest \
+                  pandocscholar/${{ matrix.distro }}:${version}
+              docker push pandocscholar/${{ matrix.distro }}:${version}
+          else
+              printf "Could not determine version" >&2
+              exit 1
+          fi
