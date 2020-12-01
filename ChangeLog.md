@@ -1,6 +1,34 @@
 ChangeLog
 =========
 
+v2.3.0
+------
+
+Released 2020-12-01
+
+- Turned `example` dir into standalone example. The example is now
+  clearer about how pandoc-scholar can be used when it was installed
+  in a central location.
+
+- Provide Docker images. Each new release is now accompanied by
+  Docker images bundling all basic requirements into a single
+  container. See the README for more info.
+
+- Updated the LaTeX template. The template incorporates improvements
+  from the latest pandoc version and will now also work with pandoc
+  2.11.
+  
+- Renamed class given to the `<div>` wrapper around author
+  affiliations. The class was named `author_affiliations`, but the
+  CSS styles assumed `author-affiliations`. The HTML markup has been
+  updated to match the CSS.
+
+- Removed unneeded files from lua-filters. Files for testing have
+  been dropped; only the filter files and docs are kept. The next
+  major version will also change the directory structure below
+  `lua-filters` and get rid of the separate subdirectories for each
+  filter.
+
 v2.2.2
 ------
 
