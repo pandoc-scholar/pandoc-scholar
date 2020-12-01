@@ -1,0 +1,59 @@
+name: Manual Docker release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        name: tag name
+        required: true
+        default: latest
+        description: Tag under which the images should be published.
+      is-latest:
+        name: "is latest?"
+        required: true
+        default: false
+        description: Whether the build is also the latest version.
+
+jobs:
+  docker:
+    name: Docker release
+    runs-on: ubuntu-18.04
+    strategy:
+      fail-fast: false
+      matrix:
+        distro:
+          - ubuntu
+          - alpine
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Create Docker image
+        run: |
+          docker build \
+              --tag pandocscholar/${{ matrix.distro }}:latest \
+              --file docker/${{ matrix.distro }}.Dockerfile \
+              .
+
+      - name: Run Docker on example
+        run: |
+          docker run --rm \
+                 --user "$(id -u):$(id -g)" \
+                 --volume "$(pwd)/example:/data" \
+                 pandocscholar/${{ matrix.distro }}:latest
+
+      - name: Login to Docker Hub
+        run: >-
+          echo "${{ secrets.DOCKER_HUB_TOKEN }}" |
+            docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
+
+      - name: Push image as latest
+        if: github.event.inputs.is-latest != false
+        run: docker push pandocscholar/${{ matrix.distro }}:latest
+
+      - name: Push image as tag
+        run: |
+          docker tag \
+              pandocscholar/${{ matrix.distro }}:latest \
+              pandocscholar/${{ matrix.distro }}:${{ github.event.inputs.tag }}
+          docker push pandocscholar/${{ matrix.distro }}:${{ github.event.inputs.tag }}
