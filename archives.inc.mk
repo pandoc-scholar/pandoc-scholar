@@ -1,7 +1,7 @@
 # Generate Archives for distribution
 # ==================================
 
-archives: init dist/pandoc-scholar.zip dist/pandoc-scholar.tar.gz
+archives: dist/pandoc-scholar.zip dist/pandoc-scholar.tar.gz
 
 dist/pandoc-scholar: \
 		csl \

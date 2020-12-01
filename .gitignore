@@ -1,8 +1,5 @@
 # Generated files
 /outfile.*
 
-# Third-party files
-/lua-filters
-
 # Release files
 /dist

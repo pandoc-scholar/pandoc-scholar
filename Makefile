@@ -7,10 +7,9 @@ PANDOC_SCHOLAR_PATH   ?= $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))
 -include local.mk
 include $(PANDOC_SCHOLAR_PATH)/pandoc-options.inc.mk
 
-# Local path in which Lua filters are stored. MUST include the trailing slash.
-LUA_FILTERS_PATH      ?= $(PANDOC_SCHOLAR_PATH)/lua-filters/
-# Lua filter release to use
-LUA_FILTERS_VERSION   ?= v2020-11-29
+LUA_FILTERS_PATH      ?= $(PANDOC_SCHOLAR_PATH)/lua-filters
+
+PANDOC ?= pandoc
 
 # Configuration (overwrite using Makefile.local.in if necessary)
 ARTICLE_FILE          ?= example/article.md
@@ -19,16 +18,14 @@ DEFAULT_EXTENSIONS    ?= latex pdf docx odt epub html
 ADDITIONAL_EXTENSIONS ?= xml jats jsonld txt
 JSON_FILE             ?= $(OUTFILE_PREFIX).enriched.json
 FLATTENED_JSON_FILE   ?= $(OUTFILE_PREFIX).flattened.json
-
-LUA_FILTER_NAMES      ?= cito.lua abstract-to-meta.lua scholarly-metadata.lua
-LUA_FILTERS           ?= $(foreach f,$(LUA_FILTER_NAMES),$(LUA_FILTERS_PATH)$f)
+LUA_FILTERS           ?= $(LUA_FILTERS_PATH)/cito/cito.lua \
+                         $(LUA_FILTERS_PATH)/abstract-to-meta/abstract-to-meta.lua \
+                         $(LUA_FILTERS_PATH)/scholarly-metadata/scholarly-metadata.lua
 
 default: $(addprefix $(OUTFILE_PREFIX).,$(DEFAULT_EXTENSIONS))
-.PHONY: default
 
 all: $(addprefix $(OUTFILE_PREFIX).,$(DEFAULT_EXTENSIONS)) \
      $(addprefix $(OUTFILE_PREFIX).,$(ADDITIONAL_EXTENSIONS))
-.PHONY: all
 
 $(JSON_FILE): $(ARTICLE_FILE) $(LUA_FILTERS)
 	$(PANDOC) $(PANDOC_READER_OPTIONS) \
@@ -47,26 +44,26 @@ $(OUTFILE_PREFIX).pdf $(OUTFILE_PREFIX).latex: \
 
 $(OUTFILE_PREFIX).docx: $(JSON_FILE) \
 		$(DOCX_REFERENCE_FILE) \
-		$(LUA_FILTERS_PATH)author-info-blocks.lua
+		$(LUA_FILTERS_PATH)/author-info-blocks/author-info-blocks.lua
 	$(PANDOC) $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_DOCX_OPTIONS) \
-	       --lua-filter=$(LUA_FILTERS_PATH)/author-info-blocks.lua \
+	       --lua-filter=$(LUA_FILTERS_PATH)/author-info-blocks/author-info-blocks.lua \
 	       --output $@ $<
 
 $(OUTFILE_PREFIX).odt: $(JSON_FILE) \
 		$(ODT_REFERENCE_FILE) \
-		$(LUA_FILTERS_PATH)author-info-blocks.lua
+		$(LUA_FILTERS_PATH)/author-info-blocks/author-info-blocks.lua
 	$(PANDOC) $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_ODT_OPTIONS) \
-	       --lua-filter=$(LUA_FILTERS_PATH)author-info-blocks.lua \
+	       --lua-filter=$(LUA_FILTERS_PATH)/author-info-blocks/author-info-blocks.lua \
 	       --output $@ $<
 
 $(OUTFILE_PREFIX).epub: $(JSON_FILE) \
 		$(TEMPLATE_FILE_EPUB) \
-		$(LUA_FILTERS_PATH)author-info-blocks.lua
+		$(LUA_FILTERS_PATH)/author-info-blocks/author-info-blocks.lua
 	$(PANDOC) $(PANDOC_WRITER_OPTIONS) \
 	       $(PANDOC_EPUB_OPTIONS) \
-	       --lua-filter=$(LUA_FILTERS_PATH)author-info-blocks.lua \
+	       --lua-filter=$(LUA_FILTERS_PATH)/author-info-blocks/author-info-blocks.lua \
 	       --output $@ $<
 
 $(OUTFILE_PREFIX).html: $(JSON_FILE) \
@@ -101,8 +98,7 @@ $(OUTFILE_PREFIX).txt: $(ARTICLE_FILE)
 ## The JSON file is required only for metadata (csl) extraction
 ## by the jats-fixes.lua script, as pandoc overrides the CSL
 ## field when converting to JATS.
-$(OUTFILE_PREFIX).jats $(OUTFILE_PREFIX).xml: \
-		$(ARTICLE_FILE) \
+$(OUTFILE_PREFIX).jats $(OUTFILE_PREFIX).xml: $(ARTICLE_FILE) \
 		$(JSON_FILE) \
 		$(PANDOC_SCHOLAR_PATH)/templates/pandoc-scholar.jats \
 		$(PANDOC_SCHOLAR_PATH)/scholar-filters/jats-fixes.lua \
@@ -121,33 +117,6 @@ $(OUTFILE_PREFIX).jats $(OUTFILE_PREFIX).xml: \
 	       --to=jats \
 	       --output $@ $<
 
-ifneq ($(LUA_FILTERS_PATH),)
-# Base release URL from which Lua filters are downloaded
-lua_filters_url = https://github.com/pandoc/lua-filters/releases
-
-.PHONY: init
-init: $(LUA_FILTERS_PATH)
-
-ifdef NO_GNU_TAR
-$(LUA_FILTERS_PATH):
-	mkdir -p $@
-	curl --location --silent --show-error \
-	     $(lua_filters_url)/download/$(LUA_FILTERS_VERSION)/lua-filters.tar.gz |\
-	    tar -C /tmp -zvxf -
-	cp -a /tmp/lua-filters/filters/* $@
-	rm -rf /tmp/lua-filters
-else
-$(LUA_FILTERS_PATH):
-	mkdir -p $@
-	curl --location --silent --show-error \
-	     $(lua_filters_url)/download/$(LUA_FILTERS_VERSION)/lua-filters.tar.gz |\
-	    tar --strip-components=2 \
-	        --one-top-level=$@ \
-	        -zvxf - \
-	        lua-filters/filters/
-endif
-endif
-
 clean:
 	@# Explicitly iterate over known extensions instead of using a wildcard.
 	@# This lets us avoid to accidentally delete any other files, e.g. if the
@@ -157,7 +126,7 @@ clean:
 	done
 	rm -f $(JSON_FILE) $(FLATTENED_JSON_FILE)
 
-.PHONY: all
+.PHONY: all clean
 
 # Include archive-generating targets. This makefile is not included in the
 # distributed archives

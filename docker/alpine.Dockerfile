@@ -7,7 +7,7 @@ env NO_GNU_TAR=true
 RUN make archives
 
 
-FROM pandoc/latex:2.11.2
+FROM pandoc/latex:2.10.1
 
 RUN apk --no-cache add make \
   && tlmgr install preprint

@@ -9,7 +9,7 @@ COPY . /app
 RUN make archives
 
 
-FROM pandoc/ubuntu-latex:2.11.2
+FROM pandoc/ubuntu-latex:2.10.1
 
 RUN apt-get -q --no-allow-insecure-repositories update \
   && DEBIAN_FRONTEND=noninteractive \
