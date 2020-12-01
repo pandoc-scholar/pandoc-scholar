@@ -1,10 +1,10 @@
-Pandoc Scholar
+pandoc-scholar
 ==============
 
 [![release shield]](https://github.com/pandoc-scholar/pandoc-scholar/releases)
 [![DOI]](https://zenodo.org/badge/latestdoi/82204858)
 [![license shield]](./LICENSE)
-[![build status]](https://travis-ci.org/pandoc-scholar/pandoc-scholar)
+[![Build status][GitHub Actions badge]][GitHub Actions]
 
 Create beautiful, semantically enriched articles with pandoc. This
 package provides utilities to make publishing of scientific articles as
@@ -14,29 +14,30 @@ requires the programs pandoc and make.
 
 [release shield]: https://img.shields.io/github/release/pandoc-scholar/pandoc-scholar.svg
 [license shield]: https://img.shields.io/github/license/pandoc-scholar/pandoc-scholar.svg
-[build status]:   https://img.shields.io/travis/pandoc-scholar/pandoc-scholar/master.svg
+[GitHub Actions badge]: https://img.shields.io/github/workflow/status/pandoc-scholar/pandoc-scholar/CI?logo=github
+[GitHub Actions]: https://github.com/pandoc-scholar/pandoc-scholar/actions
 [DOI]: https://zenodo.org/badge/82204858.svg
-[paper]: https://peerj.com/articles/cs-112/
 
 Overview
 --------
 
 Plain pandoc is already excellent at document conversion, but it lacks
-in metadata handling. Pandoc scholar offers simple ways to include
+in metadata handling. Pandoc-scholar offers simple ways to include
 metadata on authors, affiliations, contact details, and citations. The
 data is included into the final output as document headers. Additionally
 all entries can be exported as [JSON-LD], a standardized format for the
 semantic web.
 
-The background leading to the development of pandoc scholar is described
-in the [paper] published in PeerJ Computer Science.
+The background leading to the development of pandoc-scholar is described
+in the [paper published in PeerJ Computer Science][paper].
 
-Note that since version 2.0, most of the functionality of pandoc Scholar
+Note that since version 2.0, most of the functionality of pandoc-scholar
 is now provided via [pandoc Lua filters]. If you prefer to mix-and-match
-selected functionalities provided by pandoc scholar, you can now use the
+selected functionalities provided by pandoc-scholar, you can now use the
 respective Lua filters directly. Integration with tools like RMarkdown
 is possible this way.
 
+[paper]: https://peerj.com/articles/cs-112/
 [JSON-LD]: https://en.wikipedia.org/wiki/JSON-LD
 [pandoc Lua filters]: https://github.com/pandoc/lua-filters
 
@@ -195,10 +196,10 @@ include $(PANDOC_SCHOLAR_PATH)/Makefile
 Metadata Features
 -----------------
 
-Pandoc scholar supports additional functionality via metadata fields. Most
+Pandoc-scholar supports additional functionality via metadata fields. Most
 notably, the augmentation of articles with author and affiliation data, which is
-essential for academic publishing, is greatly simplified when using pandoc
-scholar.
+essential for academic publishing, is greatly simplified when using
+pandoc-scholar.
 
 ### Authors and affiliations
 
@@ -257,7 +258,7 @@ future extensions will be based on this convention.
 Understanding the reason a citations is included in scholarly articles usually
 requires natural language processing of the article. However, navigating the
 current literature landscape can be improved and by having that information
-accesible and in a machine-readable form. Pandoc scholar supports the CiTO
+accesible and in a machine-readable form. Pandoc-scholar supports the CiTO
 ontology, allowing authors to specify important meta-information on the citation
 directly while writing the text. The property is simply prepended to the
 citation key, separated by a colon: `@<property>:citationKey`.
