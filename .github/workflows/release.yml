@@ -24,7 +24,7 @@ jobs:
         with:
           tag_name: ${{ github.ref }}
           release_name: pandoc-scholar ${{ github.ref }}
-          draft: true
+          draft: false
           prerelease: false
 
       - name: Add zip archive to release
