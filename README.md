@@ -56,6 +56,56 @@ metadata in [JSON-LD] format.
 [epub]: https://pandoc-scholar.github.io/example/example.epub
 [JSON-LD]: https://pandoc-scholar.github.io/example/example.jsonld
 
+Usage via Docker
+----------------
+
+A very easy way to use pandoc-scholar is via Docker. The ready-made
+images contain all necessary software to generate a paper in
+multiple formats. This avoids any compatibility concerns; only
+Docker is required.
+
+The official images are in the [pandocscholar/ubuntu] and
+[pandocscholar/alpine] images. The Alpine image is a bit smaller,
+while the Ubuntu image may be more familiar for people looking to
+extend the image. Both images come with pandoc, pandoc-citeproc,
+pandoc-crossref, and LaTeX.
+
+### Example call
+
+Docker commands are often unwieldly due to the additional arguments.
+We recommend to define an alias or short script to simplify its use.
+
+Given an article in file `my-research-article.md` and a simple
+Makefile like
+
+```makefile
+ARTICLE_FILE = my-research-article.md
+OUTFILE_PREFIX = out
+include $(PANDOC_SCHOLAR_PATH)/Makefile
+```
+
+the conversion can be performed by running
+
+    docker run --rm -v "$(pwd):/data" -u "$(id -u)" pandocscholar/alpine
+
+This will generate a set of files whose names all start with `out.`.
+Please be aware that existing files of the same name will be
+overwritten. The pandoc-scholar container calls `make` internally;
+additional commands and options can be passed by appending them the
+above command.
+
+The images are based upon the official pandoc images; for more info
+and usage examples, see the [pandoc/dockerfiles] GitHub repo. The
+Docker images can easily be used in automatic document conversion
+pipelines; [pandoc-actions-example] gives a good overview.
+
+A major difference between pandoc and pandoc-scholar images is that
+pandoc-scholar doesn't use `pandoc` but `make` as entrypoint. A
+basic Makefile must be present in the article directory when running
+pandoc-scholar.
+
+[pandoc/dockerfiles]: https://github.com/pandoc/dockerfiles
+[pandoc-actions-example]: https://github.com/pandoc/pandoc-action-example
 
 Prerequisites
 -------------
