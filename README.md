@@ -112,10 +112,11 @@ Prerequisites
 -------------
 
 This package builds on [pandoc](http://pandoc.org/), the universal
-document converter, version 2.11 or later. See the pandoc website for
+document converter, version 2.10. See the pandoc website for
 [installation instructions](http://pandoc.org/installing.html) and
 suggestions for LaTeX packages, which we use for PDF generation.
 
+For now pandoc 2.11 (the latest release) is not yet supported, because the new citation handling in pandoc 2.11 will need further adjustments to the project. For those who already using pandoc 2.11 there is a workarounds, which can get the main process running (at least pdf, docx and odt output is generated): Adjust the file *pandoc-options.inc.mk* on line 4 to the following `PANDOC_CITEPROC ?= --citeproc` and on line 20 to `PANDOC_WRITER_OPTIONS += $(PANDOC_CITEPROC)`
 
 Installation
 ------------
@@ -161,7 +162,7 @@ include $(PANDOC_SCHOLAR_PATH)/Makefile
 Calling `make` as usual will create all configured output formats. Per default,
 this creates *pdf*, *latex*, *docx*, *odt*, *epub*, *html*, and *jats* output.
 The set of output files can be reduced by setting the `DEFAULT_EXTENSIONS`
-variable to a subset of the aforementioned formats.
+variable to a subset of the aforementioned formats. For example `DEFAULT_EXTENSIONS = pdf odt docx`
 
 Alternative template files can be set using `TEMPLATE_FILE_<FORMAT>` variables,
 where `<FORMAT>` is one of *HTML*, *EPUB*, *JATS*, or *LATEX*. The reference
