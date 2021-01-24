@@ -112,11 +112,17 @@ Prerequisites
 -------------
 
 This package builds on [pandoc](http://pandoc.org/), the universal
-document converter, version 2.10. See the pandoc website for
-[installation instructions](http://pandoc.org/installing.html) and
-suggestions for LaTeX packages, which we use for PDF generation.
+document converter. See the pandoc website for [installation
+instructions](http://pandoc.org/installing.html) and suggestions for
+LaTeX packages, which we use for PDF generation.
 
-For now pandoc 2.11 (the latest release) is not yet supported, because the new citation handling in pandoc 2.11 will need further adjustments to the project. For those who already using pandoc 2.11 there is a workarounds, which can get the main process running (at least pdf, docx and odt output is generated): Adjust the file *pandoc-options.inc.mk* on line 4 to the following `PANDOC_CITEPROC ?= --citeproc` and on line 20 to `PANDOC_WRITER_OPTIONS += $(PANDOC_CITEPROC)`
+Starting with pandoc-scholar 3.0.0, the minimum required pandoc version
+is 2.11. If you have to use an older pandoc, please combine it with the
+last 2.* release of pandoc-scholar.
+
+Also note that pandoc's JATS support, especially citation handling, was
+buggy prior to pandoc v2.11.4. Please use that or a newer version when
+producing JATS XML.
 
 Installation
 ------------
