@@ -1,6 +1,6 @@
 -- json-ld.lua: add a JSON-LD metadata field describing the document.
 --
--- Copyright (c) 2017-2020 Albert Krewinkel
+-- Copyright (c) 2017-2021 Albert Krewinkel
 --
 -- This program is free software; you can redistribute it and/or modify it
 -- under the terms of the GNU public license version 2 or later.
