@@ -1,6 +1,14 @@
 pandoc-scholar
 ==============
 
+> **Note**
+> This project is no longer maintained: Some features explored here
+> found their way into pandoc proper, while many others have been
+> adopted by [Quarto](https://quarto.org). If you are looking for a
+> replacement, give Quarto a try! For the remaining pandoc-scholar
+> features, as well as additional goodies, check the
+> [pandoc-ext](https://github.com/pandoc-ext) organization.
+
 [![release shield]](https://github.com/pandoc-scholar/pandoc-scholar/releases)
 [![DOI]](https://zenodo.org/badge/latestdoi/82204858)
 [![license shield]](./LICENSE)
